@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
 
 public class CustomEmbedBuilder extends EmbedBuilder{
+
     public void addDefaults(){
         this.setTimestamp(Instant.now());
         this.setColor(Color.RED);
@@ -41,9 +42,7 @@ public class CustomEmbedBuilder extends EmbedBuilder{
     }
 
     private Collection<MessageEmbed> splitUpEmbeds(){
-        int needed = 1;
         List<String> descs = splitUpString(this.getDescriptionBuilder().toString(), MessageEmbed.DESCRIPTION_MAX_LENGTH);
-
         List<Field> fields = new ArrayList<>();
 
         for (int index = 0; index < this.getFields().size(); index++){
@@ -56,10 +55,54 @@ public class CustomEmbedBuilder extends EmbedBuilder{
                     fields.add(new Field(tit, val.get(0), field.isInline()));
                 }
             }
-
-
         }
-        return null;
+
+        List<MessageEmbed> embeds = new ArrayList<>();
+        CustomEmbedBuilder currentEmbed = this;
+
+        Boolean keepEmbedding = true;
+        int embedNo = 0;
+
+        while (keepEmbedding){
+            //oooh how very dangerous
+            CustomEmbedBuilder nextCustomEmbedBuilder = new CustomEmbedBuilder();
+            nextCustomEmbedBuilder.copyFrom(currentEmbed);
+
+            nextCustomEmbedBuilder.clearFields();
+            nextCustomEmbedBuilder.setDescription(descs.get(0));
+        }
+        while (!(currentEmbed.isValidLength())){
+            //oooh how very dangerous
+            CustomEmbedBuilder nextCustomEmbedBuilder = new CustomEmbedBuilder();
+            nextCustomEmbedBuilder.copyFrom(currentEmbed);
+
+            nextCustomEmbedBuilder.clearFields();
+            // continue next time see white board for mor einfo
+            
+        }
+
+        return embeds;
+    }
+
+
+    /**
+     * Checks whether the constructed {@link net.dv8tion.jda.api.entities.MessageEmbed MessageEmbed}
+     * is within the limits for a bot account. UPDATED FOR FIELDS AND DESCRIPTIONS
+     *
+     * @return True, if all is cool
+     * @apiNote Title, footer and author lengths cannot be verified.
+     */
+    @Override
+    public boolean isValidLength(){
+        
+        if (this.length() > MessageEmbed.EMBED_MAX_LENGTH_BOT) {return false;}
+        if (this.getDescriptionBuilder().length() > MessageEmbed.DESCRIPTION_MAX_LENGTH) {return false;}
+
+        for (Field field : this.getFields()){
+            if (field.getName().length() > MessageEmbed.TITLE_MAX_LENGTH){return false;}
+            if (field.getValue().length() > MessageEmbed.VALUE_MAX_LENGTH){return false;}
+        }
+        return true;
     }
 
 }

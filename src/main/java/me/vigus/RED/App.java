@@ -7,6 +7,7 @@ import javax.security.auth.login.LoginException;
 import me.vigus.RED.command.Command;
 import me.vigus.RED.command.CommandDispatch;
 import me.vigus.RED.commands.Help;
+import me.vigus.RED.commands.fieldTest;
 import me.vigus.RED.options.RobloxUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -32,6 +33,7 @@ public class App
     public static void main(String[] args) throws LoginException, InterruptedException
     {
         Command.registerCommand(new Help());
+        Command.registerCommand(new fieldTest());
         
 
         JDA jda = JDABuilder.createLight("NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY", GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)

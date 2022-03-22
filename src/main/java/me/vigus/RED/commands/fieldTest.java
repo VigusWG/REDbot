@@ -31,9 +31,9 @@ public class fieldTest extends Command {
         // I realise this is an odd test lol
         CustomEmbedBuilder b = new CustomEmbedBuilder();
         b.setTitle("field test");
-        b.addSplitField("sdrg", lorem, false);
+        b.addField("sdrg", lorem, false);
         b.setDescription(String.format("hello i am a description under 6000 chars!%nisValidLength() returns %b", b.isValidLength()));
-        b.setThumbnail("https://abs.twimg.com/emoji/v2/svg/1f389.svg");
+        b.setThumbnail("https://www.pinclipart.com/picdir/middle/447-4473590_random-png-transparent-background-imagenes-random-png-clipart.png");
         b.setImage("https://www.pinclipart.com/picdir/middle/447-4473590_random-png-transparent-background-imagenes-random-png-clipart.png");
         b.setAuthor("Vigus");
         //b.clearFields();

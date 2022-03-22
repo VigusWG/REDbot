@@ -3,8 +3,6 @@ package me.vigus.RED.commands;
 import me.vigus.RED.command.Command;
 import me.vigus.RED.command.CustomEmbedBuilder;
 import me.vigus.RED.command.TextFormat;
-import me.vigus.RED.enums.textFormats;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
@@ -33,6 +31,7 @@ public class Help extends Command{
         b.setTitle("pLEASE WORK");
         b.setDescription(f);
         b.addDefaults();
+        b.addField("filed", "value", false);
         return b;
     }
 

@@ -1,7 +1,7 @@
-package me.vigus.RED.commands;
+package me.vigus.RED.discordBot.command.commands;
 
-import me.vigus.RED.command.Command;
-import me.vigus.RED.command.CustomEmbedBuilder;
+import me.vigus.RED.discordBot.command.Command;
+import me.vigus.RED.discordBot.command.CustomEmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;

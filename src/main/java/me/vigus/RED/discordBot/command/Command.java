@@ -1,4 +1,4 @@
-package me.vigus.RED.discordBot.command;
+package me.vigus.red.discordbot.command;
 
 import java.util.ArrayList;
 import java.util.Collection;

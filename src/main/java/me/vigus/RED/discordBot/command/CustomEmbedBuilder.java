@@ -1,4 +1,4 @@
-package me.vigus.RED.discordBot.command;
+package me.vigus.red.discordbot.command;
 
 import java.awt.Color;
 import java.time.Instant;
@@ -18,7 +18,7 @@ public class CustomEmbedBuilder extends EmbedBuilder{
         
     public void addDefaults(){
         this.setTimestamp(Instant.now());
-        this.setColor(Color.RED);
+        this.setColor(Color.red);
     }
 
     public Collection<MessageEmbed> formattedBuild(){

@@ -1,9 +1,9 @@
-package me.vigus.RED.discordBot.command;
+package me.vigus.red.discordbot.command;
 
 import javax.security.auth.login.LoginException;
 
-import me.vigus.RED.discordBot.command.commands.Help;
-import me.vigus.RED.discordBot.command.commands.fieldTest;
+import me.vigus.red.discordbot.command.commands.Help;
+import me.vigus.red.discordbot.command.commands.fieldTest;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;

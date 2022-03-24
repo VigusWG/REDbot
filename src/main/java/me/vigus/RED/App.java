@@ -1,8 +1,6 @@
-package me.vigus.RED;
+package me.vigus.red;
 
-import javax.security.auth.login.LoginException;
-
-import me.vigus.RED.discordBot.command.discordBot;
+import me.vigus.red.discordbot.command.discordBot;
 
 public class App
 {
@@ -10,9 +8,7 @@ public class App
     {
         try {
             discordBot.main();
-        } catch (LoginException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

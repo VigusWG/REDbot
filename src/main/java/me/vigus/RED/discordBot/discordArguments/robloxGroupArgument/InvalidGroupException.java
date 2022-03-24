@@ -1,4 +1,4 @@
-package me.vigus.RED.discordBot.discordArguments.robloxGroupArgument;
+package me.vigus.red.discordbot.discordarguments.robloxgroupargument;
 
 public class InvalidGroupException extends Exception{
     public InvalidGroupException(String errorMessage){

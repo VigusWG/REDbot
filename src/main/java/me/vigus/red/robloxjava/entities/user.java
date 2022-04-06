@@ -1,18 +1,43 @@
 package me.vigus.red.robloxjava.entities;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class user {
-    private final String name;
-    private final List<group> groups;
-     
+public class User {
+    private String name;
+    private Boolean isBanned;
+    private String displayName;
+    private LocalDateTime created;
 
+    private List<UserJoinedGroup> groups;
+    private List<Badge> badges;
 
-    public user(int userId){
-        name = "harry";
-        groups = new ArrayList<>();
+    public User(int userId){
+        name = "harry";       
+    
+    }
 
+    public String getName() {
+        return this.name;
+    }
 
+    public Boolean isBanned() {
+        return this.isBanned;
+    }
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public LocalDateTime getCreated() {
+        return this.created;
+    }
+
+    public List<UserJoinedGroup> getGroups() {
+        return this.groups;
+    }
+
+    public List<Badge> getBadges() {
+        return this.badges;
     }
 }

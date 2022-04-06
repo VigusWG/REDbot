@@ -1,7 +1,7 @@
 package me.vigus.red.robloxjava.entities;
 
-public class group {
-    public group(int groupId){
+public class Group {
+    public Group(int groupId){
 
     }
 

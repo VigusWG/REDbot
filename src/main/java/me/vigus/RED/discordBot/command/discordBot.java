@@ -2,8 +2,9 @@ package me.vigus.red.discordbot.command;
 
 import javax.security.auth.login.LoginException;
 
-import me.vigus.red.discordbot.command.commands.Help;
-import me.vigus.red.discordbot.command.commands.fieldTest;
+import me.vigus.red.discordbot.command.slashcommands.Help;
+import me.vigus.red.discordbot.command.usercommands.TestUser;
+import me.vigus.red.discordbot.command.slashcommands.FieldTest;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -21,7 +22,7 @@ public class discordBot {
             bot = JDABuilder.createLight("NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY", GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
             .setEventManager(new AnnotatedEventManager())
             .addEventListeners(new CommandDispatch())
-            .setActivity(Activity.playing("Type !ping"))
+            .setActivity(Activity.competing("big competitions"))
             .build();
 
         bot.awaitReady(); //note blocking
@@ -44,9 +45,8 @@ public class discordBot {
 
     public static void registerCommand(){
         Command.registerCommand(new Help());
-        Command.registerCommand(new fieldTest());
-
-        
+        Command.registerCommand(new FieldTest());
+        Command.registerCommand(new TestUser());
     }
 
     public static void main() throws LoginException, InterruptedException
@@ -62,6 +62,5 @@ public class discordBot {
     public void onReady(ReadyEvent event){
         System.out.println("Successfully stareted something idk what.");
     }
-
 }
 

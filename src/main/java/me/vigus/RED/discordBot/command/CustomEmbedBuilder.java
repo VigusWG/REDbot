@@ -26,7 +26,6 @@ public class CustomEmbedBuilder extends EmbedBuilder{
 
         for (CustomEmbedBuilder newEmbed : this.splitUpEmbeds()){
             newEmbed.addDefaults();
-            System.out.println(newEmbed.getFields());
             embeds.add(newEmbed.build());
         }
         return embeds;

@@ -1,9 +1,11 @@
-package me.vigus.red.discordbot.command;
+package me.vigus.red.discordbot;
 
 import javax.security.auth.login.LoginException;
 
 import me.vigus.red.discordbot.command.slashcommands.Help;
 import me.vigus.red.discordbot.command.usercommands.TestUser;
+import me.vigus.red.discordbot.command.Command;
+import me.vigus.red.discordbot.command.CommandDispatch;
 import me.vigus.red.discordbot.command.slashcommands.FieldTest;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -25,7 +27,7 @@ public class discordBot {
             .setActivity(Activity.competing("big competitions"))
             .build();
 
-        bot.awaitReady(); //note blocking
+        bot.awaitReady(); //note: blocking
         }
     }
 

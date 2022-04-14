@@ -1,7 +1,9 @@
 package me.vigus.red.robloxjava.connection.json;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -9,6 +11,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import me.vigus.red.robloxjava.connection.http.HTTPConnection;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -21,6 +28,29 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 "displayName"
 })
 public class User {
+
+    /*
+    @JsonIgnore
+    public static URI makeUri(int userId){
+        return URI.create(String.format("https://users.roblox.com/v1/users/%s", userId));
+    }
+    */
+
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
+    @JsonIgnore
+    public static CompletableFuture<User> request(long userId){
+        return HTTPConnection.getInstance().makeRequest(String.format("https://users.roblox.com/v1/users/%s", userId))
+            .thenApply(response -> {
+                try {
+                    return objectMapper.readValue(response.body(), User.class);
+                } catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+
+    }             
 
     @JsonProperty("description")
     private String description;

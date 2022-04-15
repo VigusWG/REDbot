@@ -27,7 +27,7 @@ import me.vigus.red.robloxjava.connection.http.HTTPConnection;
 "name",
 "displayName"
 })
-public class User {
+public class UserJson {
 
     /*
     @JsonIgnore
@@ -39,11 +39,11 @@ public class User {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @JsonIgnore
-    public static CompletableFuture<User> request(long userId){
+    public static CompletableFuture<UserJson> request(long userId){
         return HTTPConnection.getInstance().makeRequest(String.format("https://users.roblox.com/v1/users/%s", userId))
             .thenApply(response -> {
                 try {
-                    return objectMapper.readValue(response.body(), User.class);
+                    return objectMapper.readValue(response.body(), UserJson.class);
                 } catch (Exception e){
                     e.printStackTrace();
                     return null;

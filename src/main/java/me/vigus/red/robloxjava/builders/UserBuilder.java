@@ -1,7 +1,17 @@
-package me.vigus.red.robloxjava;
+package me.vigus.red.robloxjava.builders;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+
+import com.fasterxml.jackson.core.sym.Name;
+
+import me.vigus.red.robloxjava.Asset;
+import me.vigus.red.robloxjava.Badge;
+import me.vigus.red.robloxjava.Outfit;
+import me.vigus.red.robloxjava.connection.json.UserJson;
+import me.vigus.red.robloxjava.entities.User;
 
 public class UserBuilder {
 
@@ -201,7 +211,26 @@ public class UserBuilder {
 
         //so http stuff here
 
-        ArrayList<URI> requests = new ArrayList<>();
+        String name = null;
+        String description= null;
+        String displayName = null;
+        Boolean isBanned = null;
+        LocalDateTime created = null;
+        Long friendCount2 = null;
+        Long followerCount2 = null;
+        Long followingCount2 = null;
+        ArrayList<User> friendsList = null;
+        ArrayList<User> followersList = null;  
+        ArrayList<User> followingsList = null;
+        String thumbnailString = null;
+        Long ammountOfOutfits = null;
+        ArrayList<Outfit> outfitsList = null;
+        ArrayList<Asset> favoriteGamesList = null;
+        ArrayList<Badge> badgesList = null;      
+        Object avatarObject = null; //fuck knows how this works.
+
+        ArrayList<CompletableFuture> completables = new ArrayList<>();
+
         if (this.getGroups()){
             //requests.add(e)
         }
@@ -225,7 +254,8 @@ public class UserBuilder {
         }
 
         if (this.getBasicUser()){
-            //
+            completables.add(UserJson.request(this.userId)
+                .thenApply(result -> name=result.getName() ));
         }
 
         if (this.getBadges()){
@@ -247,9 +277,10 @@ public class UserBuilder {
         if (this.getFavoriteGames()){
             //
         }
+
+
         
-        //return new User(this);
-        return null;
+        return new User(name, description, displayName, this.userId, isBanned, created, friendCount2, followerCount2, followingCount2, friendsList, followersList, followingsList, thumbnailString, outfitsList, favoriteGamesList, badgesList);
     }
 
 }

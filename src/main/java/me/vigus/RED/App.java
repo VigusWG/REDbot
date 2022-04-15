@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.discordbot.discordBot;
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
-import me.vigus.red.robloxjava.connection.json.User;
+import me.vigus.red.robloxjava.connection.json.UserJson;
 
 public class App
 {
@@ -44,11 +44,11 @@ public class App
         // System.out.println(group.getMemberCount());
         // System.out.println(group.getShout());
 
-        CompletableFuture<User> user = User.request(999999999);
+        CompletableFuture<UserJson> user = UserJson.request(999999999);
         System.out.println(user);
         System.out.println(user.isDone());   
         System.out.println(user.get());
-        User us = user.get();
+        UserJson us = user.get();
         System.out.println(us.getName());        
     }
 }

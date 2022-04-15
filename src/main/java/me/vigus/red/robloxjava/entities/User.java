@@ -1,8 +1,12 @@
-package me.vigus.red.robloxjava;
+package me.vigus.red.robloxjava.entities;
 
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import me.vigus.red.robloxjava.Asset;
+import me.vigus.red.robloxjava.Badge;
+import me.vigus.red.robloxjava.Outfit;
+import me.vigus.red.robloxjava.builders.UserBuilder;
 
 public class User {
 
@@ -29,19 +33,26 @@ public class User {
     private String name;
     private String descritption;
     private String displayName;
-    private long id;
+    private Long id;
     private boolean isBanned;
     private LocalDateTime created;
     
     //counts
-    private long friendCount;
-    private long followerCount;
-    private long followingCount;
+    private Long friendCount;
+    private Long followerCount;
+    private Long followingCount;
 
     //friends
     private ArrayList<User> friends;
     private ArrayList<User> followers;       
     private ArrayList<User> followings;   
+
+    private String thumbnail;
+    private Long ammountOfOutfits;
+    private ArrayList<Outfit> outfits;
+    
+    private ArrayList<Asset> favoriteGames;
+    private ArrayList<Badge> badges;
 
     public String getName() {
         return this.name;
@@ -55,7 +66,7 @@ public class User {
         return this.displayName;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -71,15 +82,15 @@ public class User {
         return this.created;
     }
 
-    public long getFriendCount() {
+    public Long getFriendCount() {
         return this.friendCount;
     }
 
-    public long getFollowerCount() {
+    public Long getFollowerCount() {
         return this.followerCount;
     }
 
-    public long getFollowingCount() {
+    public Long getFollowingCount() {
         return this.followingCount;
     }
 
@@ -99,7 +110,7 @@ public class User {
         return this.thumbnail;
     }
 
-    public long getAmmountOfOutfits() {
+    public Long getAmmountOfOutfits() {
         return this.ammountOfOutfits;
     }
 
@@ -115,16 +126,11 @@ public class User {
         return this.badges;
     }
     
-    private String thumbnail;
-    private long ammountOfOutfits;
-    private ArrayList<Outfit> outfits;
     
-    private ArrayList<Asset> favoriteGames;
-    private ArrayList<Badge> badges;
 
 
 
-    public User(String name, String descritption, String displayName, long id, boolean isBanned, LocalDateTime created, long friendCount, long followerCount, long followingCount, ArrayList<User> friends, ArrayList<User> followers, ArrayList<User> followings, String thumbnail, long ammountOfOutfits, ArrayList<Outfit> outfits, ArrayList<Asset> favoriteGames, ArrayList<Badge> badges) {
+    public User(String name, String descritption, String displayName, Long id, boolean isBanned, LocalDateTime created, Long friendCount, Long followerCount, Long followingCount, ArrayList<User> friends, ArrayList<User> followers, ArrayList<User> followings, String thumbnail, ArrayList<Outfit> outfits, ArrayList<Asset> favoriteGames, ArrayList<Badge> badges) {
         this.name = name;
         this.descritption = descritption;
         this.displayName = displayName;
@@ -138,13 +144,13 @@ public class User {
         this.followers = followers;
         this.followings = followings;
         this.thumbnail = thumbnail;
-        this.ammountOfOutfits = ammountOfOutfits;
         this.outfits = outfits;
         this.favoriteGames = favoriteGames;
         this.badges = badges;
     }
 
-    public User getUser(UserBuilder userBuilder){
+
+    public User create(UserBuilder userBuilder){
         return userBuilder.build();
     }
 

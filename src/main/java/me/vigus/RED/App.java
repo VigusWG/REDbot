@@ -11,8 +11,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.discordbot.discordBot;
+import me.vigus.red.robloxjava.builders.UserBuilder;
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
 import me.vigus.red.robloxjava.connection.json.UserJson;
+import me.vigus.red.robloxjava.entities.User;
 
 public class App
 {
@@ -44,11 +46,20 @@ public class App
         // System.out.println(group.getMemberCount());
         // System.out.println(group.getShout());
 
-        CompletableFuture<UserJson> user = UserJson.request(999999999);
-        System.out.println(user);
-        System.out.println(user.isDone());   
-        System.out.println(user.get());
+        CompletableFuture<UserJson> user = UserJson.request(175135924);
         UserJson us = user.get();
-        System.out.println(us.getName());        
+        System.out.println(us.getName());      
+
+
+        System.out.println("\n\n-------------------------------------------\n\n");
+
+
+        User user2 = new UserBuilder(175135924)
+            .setBasicUser(true)
+            .build();
+
+        System.out.println(user2.getName());
+        System.out.println(user2.getDescritption());
+
     }
 }

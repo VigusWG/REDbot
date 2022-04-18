@@ -4,6 +4,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.core.sym.Name;
 
@@ -32,7 +33,7 @@ public class UserBuilder {
     private boolean favoriteGames = false;
 
     public UserBuilder(long userId){
-        
+        this.userId = userId;
     }
 
     public boolean isGroups() {
@@ -204,14 +205,14 @@ public class UserBuilder {
         return this;
     }
 
-    public User build(){
+    public User build() throws InterruptedException, ExecutionException{
         //do some http shit surely? 
         // nah probably in the actually class right?
         // ok changed my mind again
 
         //so http stuff here
 
-        String name = null;
+        String name;
         String description= null;
         String displayName = null;
         Boolean isBanned = null;
@@ -230,6 +231,8 @@ public class UserBuilder {
         Object avatarObject = null; //fuck knows how this works.
 
         ArrayList<CompletableFuture> completables = new ArrayList<>();
+
+        User user = new User(this.userId);
 
         if (this.getGroups()){
             //requests.add(e)
@@ -255,7 +258,12 @@ public class UserBuilder {
 
         if (this.getBasicUser()){
             completables.add(UserJson.request(this.userId)
-                .thenApply(result -> name=result.getName() ));
+                .thenAccept(request -> {
+                    user.setName(request.getName());             
+                    user.setDescritption(request.getDescription());
+                    user.setCreated(request.getCreated());
+                    user.setDisplayName(request.getDisplayName());
+                }));
         }
 
         if (this.getBadges()){
@@ -278,9 +286,8 @@ public class UserBuilder {
             //
         }
 
-
-        
-        return new User(name, description, displayName, this.userId, isBanned, created, friendCount2, followerCount2, followingCount2, friendsList, followersList, followingsList, thumbnailString, outfitsList, favoriteGamesList, badgesList);
+        CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).get();
+        return user;
     }
 
 }

@@ -1,12 +1,14 @@
 package me.vigus.red.robloxjava.connection.json;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,7 +57,8 @@ public class UserJson {
     @JsonProperty("description")
     private String description;
     @JsonProperty("created")
-    private String created;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private Date created;
     @JsonProperty("isBanned")
     private Boolean isBanned;
     @JsonProperty("externalAppDisplayName")
@@ -81,12 +84,12 @@ public class UserJson {
     }
 
     @JsonProperty("created")
-    public String getCreated() {
-    return created;
+    public Date getCreated() {
+        return created;
     }
 
     @JsonProperty("created")
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
     this.created = created;
     }
 

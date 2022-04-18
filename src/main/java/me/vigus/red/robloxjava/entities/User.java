@@ -1,7 +1,8 @@
 package me.vigus.red.robloxjava.entities;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import me.vigus.red.robloxjava.Asset;
 import me.vigus.red.robloxjava.Badge;
@@ -35,7 +36,7 @@ public class User {
     private String displayName;
     private Long id;
     private boolean isBanned;
-    private LocalDateTime created;
+    private Date created;
     
     //counts
     private Long friendCount;
@@ -52,6 +53,58 @@ public class User {
     private ArrayList<Outfit> outfits;
     
     private ArrayList<Asset> favoriteGames;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDescritption(String descritption) {
+        this.descritption = descritption;
+    }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setIsBanned(boolean isBanned) {
+        this.isBanned = isBanned;
+    }
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+    public void setFriendCount(Long friendCount) {
+        this.friendCount = friendCount;
+    }
+    public void setFollowerCount(Long followerCount) {
+        this.followerCount = followerCount;
+    }
+    public void setFollowingCount(Long followingCount) {
+        this.followingCount = followingCount;
+    }
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
+    }
+    public void setFollowers(ArrayList<User> followers) {
+        this.followers = followers;
+    }
+    public void setFollowings(ArrayList<User> followings) {
+        this.followings = followings;
+    }
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    public void setAmmountOfOutfits(Long ammountOfOutfits) {
+        this.ammountOfOutfits = ammountOfOutfits;
+    }
+    public void setOutfits(ArrayList<Outfit> outfits) {
+        this.outfits = outfits;
+    }
+    public void setFavoriteGames(ArrayList<Asset> favoriteGames) {
+        this.favoriteGames = favoriteGames;
+    }
+    public void setBadges(ArrayList<Badge> badges) {
+        this.badges = badges;
+    }
     private ArrayList<Badge> badges;
 
     public String getName() {
@@ -78,7 +131,7 @@ public class User {
         return this.isBanned;
     }
 
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return this.created;
     }
 
@@ -126,31 +179,13 @@ public class User {
         return this.badges;
     }
     
-    
 
 
-
-    public User(String name, String descritption, String displayName, Long id, boolean isBanned, LocalDateTime created, Long friendCount, Long followerCount, Long followingCount, ArrayList<User> friends, ArrayList<User> followers, ArrayList<User> followings, String thumbnail, ArrayList<Outfit> outfits, ArrayList<Asset> favoriteGames, ArrayList<Badge> badges) {
-        this.name = name;
-        this.descritption = descritption;
-        this.displayName = displayName;
+    public User(long id) {
         this.id = id;
-        this.isBanned = isBanned;
-        this.created = created;
-        this.friendCount = friendCount;
-        this.followerCount = followerCount;
-        this.followingCount = followingCount;
-        this.friends = friends;
-        this.followers = followers;
-        this.followings = followings;
-        this.thumbnail = thumbnail;
-        this.outfits = outfits;
-        this.favoriteGames = favoriteGames;
-        this.badges = badges;
     }
 
-
-    public User create(UserBuilder userBuilder){
+    public User create(UserBuilder userBuilder) throws InterruptedException, ExecutionException{
         return userBuilder.build();
     }
 

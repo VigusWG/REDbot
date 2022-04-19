@@ -1,12 +1,10 @@
-package me.vigus.red.robloxjava.connection.http.exceptions;
+package me.vigus.red.robloxjava.exceptions;
 
 import me.vigus.red.robloxjava.connection.json.ErrorJson;
 
 public class RequestError extends Exception{
 
-    private ErrorJson errorJson;
-
-    
+    private final ErrorJson errorJson;
 
     public RequestError(ErrorJson errorJson){
         super(errorJson.getUserFacingMessage());

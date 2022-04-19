@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
-import me.vigus.red.robloxjava.connection.http.exceptions.RequestError;
+import me.vigus.red.robloxjava.exceptions.RequestError;
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -53,7 +53,7 @@ public class UserJson {
                 } catch (JsonProcessingException e) {
                     throw new CompletionException(e);
                 }
-                
+
                 if (it.getErrors() == null){
                     return it;
                 }else {

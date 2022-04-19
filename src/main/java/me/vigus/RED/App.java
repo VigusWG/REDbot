@@ -15,6 +15,7 @@ import me.vigus.red.robloxjava.builders.UserBuilder;
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
 import me.vigus.red.robloxjava.connection.json.UserJson;
 import me.vigus.red.robloxjava.entities.User;
+import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class App
 {
@@ -69,7 +70,8 @@ public class App
             System.out.println(user3.getName());
             
         } catch (ExecutionException ex){
-            //ex.printStackTrace();
+            System.out.println(((RequestError)ex.getCause()).getErrorJson().getMessage());
+            System.out.println(((RequestError)ex.getCause()).getErrorJson().getUserFacingMessage());
         }
         
 

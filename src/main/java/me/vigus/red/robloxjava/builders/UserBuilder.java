@@ -13,9 +13,9 @@ import com.fasterxml.jackson.core.util.RequestPayload;
 import me.vigus.red.robloxjava.Asset;
 import me.vigus.red.robloxjava.Badge;
 import me.vigus.red.robloxjava.Outfit;
-import me.vigus.red.robloxjava.connection.http.exceptions.RequestError;
 import me.vigus.red.robloxjava.connection.json.UserJson;
 import me.vigus.red.robloxjava.entities.User;
+import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class UserBuilder {
 
@@ -248,9 +248,7 @@ public class UserBuilder {
                     completableFuture.completeExceptionally(ex);
                     throw new CompletionException(ex);
                 }).whenComplete((request, exception) -> {
-                    // if (!request.getErrors().isEmpty()){
-                    //     //completableFuture.completeExceptionally(new Throwable(request.getErrors().get(0).getMessage()));
-                    // }
+
                     user.setName(request.getName());             
                     user.setDescritption(request.getDescription());
                     user.setCreated(request.getCreated());

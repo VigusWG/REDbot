@@ -4,13 +4,16 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.core.sym.Name;
+import com.fasterxml.jackson.core.util.RequestPayload;
 
 import me.vigus.red.robloxjava.Asset;
 import me.vigus.red.robloxjava.Badge;
 import me.vigus.red.robloxjava.Outfit;
+import me.vigus.red.robloxjava.connection.http.exceptions.RequestError;
 import me.vigus.red.robloxjava.connection.json.UserJson;
 import me.vigus.red.robloxjava.entities.User;
 
@@ -205,32 +208,15 @@ public class UserBuilder {
         return this;
     }
 
-    public User build() throws InterruptedException, ExecutionException{
+    public CompletableFuture<User> buildAsync(){
         //do some http shit surely? 
         // nah probably in the actually class right?
         // ok changed my mind again
 
         //so http stuff here
 
-        String name;
-        String description= null;
-        String displayName = null;
-        Boolean isBanned = null;
-        LocalDateTime created = null;
-        Long friendCount2 = null;
-        Long followerCount2 = null;
-        Long followingCount2 = null;
-        ArrayList<User> friendsList = null;
-        ArrayList<User> followersList = null;  
-        ArrayList<User> followingsList = null;
-        String thumbnailString = null;
-        Long ammountOfOutfits = null;
-        ArrayList<Outfit> outfitsList = null;
-        ArrayList<Asset> favoriteGamesList = null;
-        ArrayList<Badge> badgesList = null;      
-        Object avatarObject = null; //fuck knows how this works.
-
         ArrayList<CompletableFuture> completables = new ArrayList<>();
+        CompletableFuture<User> completableFuture = new CompletableFuture<>();
 
         User user = new User(this.userId);
 
@@ -258,11 +244,18 @@ public class UserBuilder {
 
         if (this.getBasicUser()){
             completables.add(UserJson.request(this.userId)
-                .thenAccept(request -> {
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    // if (!request.getErrors().isEmpty()){
+                    //     //completableFuture.completeExceptionally(new Throwable(request.getErrors().get(0).getMessage()));
+                    // }
                     user.setName(request.getName());             
                     user.setDescritption(request.getDescription());
                     user.setCreated(request.getCreated());
                     user.setDisplayName(request.getDisplayName());
+                    user.setIsBanned(request.getIsBanned());
                 }));
         }
 
@@ -286,8 +279,13 @@ public class UserBuilder {
             //
         }
 
-        CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).get();
-        return user;
+        
+        CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).thenRun(() -> completableFuture.complete(user));
+        return completableFuture;
+    }
+
+    public User build() throws InterruptedException, ExecutionException {
+        return this.buildAsync().get();
     }
 
 }

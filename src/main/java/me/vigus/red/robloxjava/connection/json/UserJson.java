@@ -3,8 +3,10 @@ package me.vigus.red.robloxjava.connection.json;
 import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -18,8 +20,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.http.exceptions.RequestError;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
 "description",
 "created",
@@ -44,11 +47,17 @@ public class UserJson {
     public static CompletableFuture<UserJson> request(long userId){
         return HTTPConnection.getInstance().makeRequest(String.format("https://users.roblox.com/v1/users/%s", userId))
             .thenApply(response -> {
+                UserJson it;
                 try {
-                    return objectMapper.readValue(response.body(), UserJson.class);
-                } catch (Exception e){
-                    e.printStackTrace();
-                    return null;
+                    it = objectMapper.readValue(response.body(), UserJson.class);
+                } catch (JsonProcessingException e) {
+                    throw new CompletionException(e);
+                }
+                
+                if (it.getErrors() == null){
+                    return it;
+                }else {
+                    throw new CompletionException(new RequestError(it.getErrors().get(0)));
                 }
             });
 
@@ -69,6 +78,9 @@ public class UserJson {
     private String name;
     @JsonProperty("displayName")
     private String displayName;
+
+    @JsonProperty("errors")
+    public List<ErrorJson> errors = null;
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -141,6 +153,16 @@ public class UserJson {
     @JsonProperty("displayName")
     public void setDisplayName(String displayName) {
     this.displayName = displayName;
+    }
+
+    @JsonProperty("errors")
+    public List<ErrorJson> getErrors() {
+        return errors;
+    }
+
+    @JsonProperty("errors")
+    public void setError(List<ErrorJson> jsonErrors) {
+        this.errors = jsonErrors;
     }
 
     @JsonAnyGetter

@@ -18,7 +18,7 @@ import me.vigus.red.robloxjava.entities.User;
 
 public class App
 {
-    public static void main(String[] args) throws LoginException, InterruptedException, ExecutionException, JsonMappingException, JsonProcessingException
+    public static void main(String[] args) throws InterruptedException, ExecutionException
     {
         //discordBot.main();
 
@@ -46,20 +46,32 @@ public class App
         // System.out.println(group.getMemberCount());
         // System.out.println(group.getShout());
 
-        CompletableFuture<UserJson> user = UserJson.request(175135924);
-        UserJson us = user.get();
-        System.out.println(us.getName());      
+        //CompletableFuture<UserJson> user = UserJson.request(2147483647);
+        //UserJson us = user.get();
+        //System.out.println(us.getName());      
 
 
         System.out.println("\n\n-------------------------------------------\n\n");
 
+        
 
-        User user2 = new UserBuilder(175135924)
+
+        User user2 = new UserBuilder(47483647)
             .setBasicUser(true)
             .build();
 
         System.out.println(user2.getName());
-        System.out.println(user2.getDescritption());
+
+        try {
+            User user3 = new UserBuilder(2147483647)
+                .setBasicUser(true)
+                .build();
+            System.out.println(user3.getName());
+            
+        } catch (ExecutionException ex){
+            //ex.printStackTrace();
+        }
+        
 
     }
 }

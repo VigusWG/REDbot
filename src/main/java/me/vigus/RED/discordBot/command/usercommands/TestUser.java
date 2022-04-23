@@ -1,7 +1,5 @@
 package me.vigus.red.discordbot.command.usercommands;
 
-import org.w3c.dom.Text;
-
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command.Type;

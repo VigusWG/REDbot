@@ -37,10 +37,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -55,10 +53,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -72,10 +68,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -89,10 +83,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -106,10 +98,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -123,10 +113,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -140,10 +128,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -157,10 +143,8 @@ public class Help extends SlashCommand{
             followers.get();
             followings.get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -177,13 +161,11 @@ public class Help extends SlashCommand{
 
     @Override
     public void onButtonPressed(ButtonInteractionEvent event) {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void onMenuInteraction(SelectMenuInteractionEvent event) {
-        // TODO Auto-generated method stub
         
     }
 }

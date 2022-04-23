@@ -1,22 +1,10 @@
 package me.vigus.red;
 
-import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import javax.security.auth.login.LoginException;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import me.vigus.red.discordbot.discordBot;
-import me.vigus.red.robloxjava.builders.UserBuilder;
-import me.vigus.red.robloxjava.connection.http.HTTPConnection;
-import me.vigus.red.robloxjava.connection.json.UserJson;
-import me.vigus.red.robloxjava.entities.User;
-import me.vigus.red.robloxjava.exceptions.RequestError;
-
+import me.vigus.red.robloxjava.connection.json.UserGroupsJson;
 public class App
 {
     public static void main(String[] args) throws InterruptedException, ExecutionException
@@ -47,33 +35,12 @@ public class App
         // System.out.println(group.getMemberCount());
         // System.out.println(group.getShout());
 
-        //CompletableFuture<UserJson> user = UserJson.request(2147483647);
-        //UserJson us = user.get();
-        //System.out.println(us.getName());      
-
-
-        System.out.println("\n\n-------------------------------------------\n\n");
-
-        
-
-
-        User user2 = new UserBuilder(47483647)
-            .setBasicUser(true)
-            .build();
-
-        System.out.println(user2.getName());
-
-        try {
-            User user3 = new UserBuilder(2147483647)
-                .setBasicUser(true)
-                .build();
-            System.out.println(user3.getName());
-            
-        } catch (ExecutionException ex){
-            System.out.println(((RequestError)ex.getCause()).getErrorJson().getMessage());
-            System.out.println(((RequestError)ex.getCause()).getErrorJson().getUserFacingMessage());
-        }
-        
+        CompletableFuture<ArrayList<UserGroupsJson>> groups = UserGroupsJson.request(175135924);
+        ArrayList<UserGroupsJson> us = groups.get();
+        for (UserGroupsJson i : us){
+            System.out.println(i.getName());
+            System.out.println(i.getRoleName());
+        }  
 
     }
 }

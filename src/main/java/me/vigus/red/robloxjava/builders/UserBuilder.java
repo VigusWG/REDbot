@@ -1,21 +1,12 @@
 package me.vigus.red.robloxjava.builders;
 
-import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
-import com.fasterxml.jackson.core.sym.Name;
-import com.fasterxml.jackson.core.util.RequestPayload;
-
-import me.vigus.red.robloxjava.Asset;
-import me.vigus.red.robloxjava.Badge;
-import me.vigus.red.robloxjava.Outfit;
 import me.vigus.red.robloxjava.connection.json.UserJson;
 import me.vigus.red.robloxjava.entities.User;
-import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class UserBuilder {
 
@@ -208,6 +199,7 @@ public class UserBuilder {
         return this;
     }
 
+    @SuppressWarnings("rawtypes")
     public CompletableFuture<User> buildAsync(){
         //do some http shit surely? 
         // nah probably in the actually class right?

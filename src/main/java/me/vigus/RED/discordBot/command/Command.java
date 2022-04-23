@@ -15,8 +15,6 @@ public abstract class Command{
 
     public abstract CommandData make();
 
-
-
     public static void registerCommand(Command command){
         registeredCommands.put(command.name, command);
     }

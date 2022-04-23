@@ -1,8 +1,6 @@
 package me.vigus.red.discordbot.command;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 
 import me.vigus.red.discordbot.command.messagecommand.MessageCommand;
 import me.vigus.red.discordbot.command.slashcommands.SlashCommand;

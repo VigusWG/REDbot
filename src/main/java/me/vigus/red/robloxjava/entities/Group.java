@@ -132,7 +132,4 @@ public class Group {
         this.id = id;
     }
 
-    
-
-
 }

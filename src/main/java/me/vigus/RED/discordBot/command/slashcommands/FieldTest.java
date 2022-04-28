@@ -44,13 +44,11 @@ public class FieldTest extends SlashCommand {
 
     @Override
     public void onButtonPressed(ButtonInteractionEvent event) {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void onMenuInteraction(SelectMenuInteractionEvent event) {
-        // TODO Auto-generated method stub
         
     }
     

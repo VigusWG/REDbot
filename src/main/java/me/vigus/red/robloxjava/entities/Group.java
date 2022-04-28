@@ -8,7 +8,7 @@ public class Group {
     private String description;
     private User owner;
     private int memberCount;
-
+    
     private Date created;
     private Date updated;
 
@@ -131,8 +131,5 @@ public class Group {
     public Group(long id){
         this.id = id;
     }
-
-    
-
 
 }

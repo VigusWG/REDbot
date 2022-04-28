@@ -1,4 +1,4 @@
-package me.vigus.red.robloxjava;
+package me.vigus.red.robloxjava.entities;
 
 import java.time.LocalDateTime;
 
@@ -23,23 +23,52 @@ public class Badge {
     private String awarderType;
 
 
-    public Badge(Long id, String name, String description, String displayName, String displayDescription, Boolean enabled, Long iconImageId, Long displayIconImageId, LocalDateTime created, LocalDateTime updated, Long pastDayAwardedCount, Long awardedCount, int winRatePercentage, long awarderId, String awarderType) {
+    public void setId(Long id) {
         this.id = id;
+    }
+    public void setName(String name) {
         this.name = name;
+    }
+    public void setDescription(String description) {
         this.description = description;
+    }
+    public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+    public void setDisplayDescription(String displayDescription) {
         this.displayDescription = displayDescription;
+    }
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+    public void setIconImageId(Long iconImageId) {
         this.iconImageId = iconImageId;
+    }
+    public void setDisplayIconImageId(Long displayIconImageId) {
         this.displayIconImageId = displayIconImageId;
+    }
+    public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+    public void setPastDayAwardedCount(Long pastDayAwardedCount) {
         this.pastDayAwardedCount = pastDayAwardedCount;
+    }
+    public void setAwardedCount(Long awardedCount) {
         this.awardedCount = awardedCount;
+    }
+    public void setWinRatePercentage(int winRatePercentage) {
         this.winRatePercentage = winRatePercentage;
+    }
+    public void setAwarderId(long awarderId) {
         this.awarderId = awarderId;
+    }
+    public void setAwarderType(String awarderType) {
         this.awarderType = awarderType;
     }
+    
 
 
     public Long getId() {

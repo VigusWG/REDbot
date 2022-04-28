@@ -5,8 +5,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
+import me.vigus.red.robloxjava.connection.json.FollowerCount;
+import me.vigus.red.robloxjava.connection.json.FollowingCount;
+import me.vigus.red.robloxjava.connection.json.FriendCount;
+import me.vigus.red.robloxjava.connection.json.UserGroupsJson;
 import me.vigus.red.robloxjava.connection.json.UserJson;
+import me.vigus.red.robloxjava.connection.json.UserUsernames;
 import me.vigus.red.robloxjava.entities.User;
+import me.vigus.red.robloxjava.entities.UserInGroup;
 
 public class UserBuilder {
 
@@ -25,10 +31,27 @@ public class UserBuilder {
     private boolean thumbnail = false;
     private boolean outfits = false;
     private boolean favoriteGames = false;
+    private boolean previousNames = false;
+
 
     public UserBuilder(long userId){
         this.userId = userId;
     }
+
+
+    public boolean isPreviousNames() {
+        return this.previousNames;
+    }
+
+    public boolean getPreviousNames() {
+        return this.previousNames;
+    }
+
+    public UserBuilder setPreviousNames(boolean previousNames) {
+        this.previousNames = previousNames;
+        return this;
+    }
+
 
     public boolean isGroups() {
         return this.groups;
@@ -213,25 +236,88 @@ public class UserBuilder {
         User user = new User(this.userId);
 
         if (this.getGroups()){
-            //requests.add(e)
+            completables.add(UserGroupsJson.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    ArrayList fut = new ArrayList<>();
+                    for (UserGroupsJson i: request){
+                        UserInGroup userInGroup = new UserInGroup(i.getId());
+                        userInGroup.setName(i.getName());
+                        userInGroup.setDescription(i.getDescription());
+                        userInGroup.setIsBuildersClubOnly(i.isIsBuildersClubOnly());
+                        userInGroup.setIsLocked(i.isLocked());
+                        userInGroup.setPublicEntryAllowed(i.isPublicEntryAllowed());
+                        userInGroup.setCreated(i.getCreated());
+                        userInGroup.setCreated(i.getUpdated());
+
+                        if (i.getShoutUserId() != null){
+                            User shoutUser = new User(i.getShoutUserId());
+                            shoutUser.setName(i.getShoutUsername());
+                            shoutUser.setDisplayName(i.getShoutDisplayName());
+                            userInGroup.setShoutPoster(shoutUser);
+                        }
+
+                        User owner = new User(i.getOwnerUserId());
+                        owner.setName(i.getOwnerUsername());
+                        owner.setDisplayName(i.getOwnerDisplayName());
+                        userInGroup.setOwner(owner);
+
+                        userInGroup.setRoleId(i.getRoleId());
+                        userInGroup.setRoleRank(i.getRoleRank());
+                        userInGroup.setRoleName(i.getRoleName());
+
+                        fut.add(userInGroup);
+                    }
+                    user.setGroups(fut);
+                }));
+        }
+
+        if (this.getPreviousNames()){
+            completables.add(UserUsernames.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setPreviousNames(request.getNames());             
+                }));
         }
 
         if (this.getFriends()){
             //
         } else if (this.getFriendCount()){
-            //
+            completables.add(FriendCount.request(this.userId)
+            .exceptionally(ex -> {
+                completableFuture.completeExceptionally(ex);
+                throw new CompletionException(ex);
+            }).whenComplete((request, exception) -> {
+                user.setFriendCount(request.getAmmount());             
+            }));
         }
 
         if (this.getFollowers()){
             //
         } else if (this.getFollowerCount()){
-
+            completables.add(FollowerCount.request(this.userId)
+            .exceptionally(ex -> {
+                completableFuture.completeExceptionally(ex);
+                throw new CompletionException(ex);
+            }).whenComplete((request, exception) -> {
+                user.setFollowerCount(request.getAmmount());             
+            }));
         }
 
         if (this.getFollowings()){
             //
         } else if (this.getFollowingsCount()){
-
+            completables.add(FollowingCount.request(this.userId)
+            .exceptionally(ex -> {
+                completableFuture.completeExceptionally(ex);
+                throw new CompletionException(ex);
+            }).whenComplete((request, exception) -> {
+                user.setFollowingCount(request.getAmmount());             
+            }));
         }
 
         if (this.getBasicUser()){

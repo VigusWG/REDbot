@@ -1,4 +1,4 @@
-package me.vigus.red.robloxjava;
+package me.vigus.red.robloxjava.entities;
 
 import java.time.LocalDateTime;
 
@@ -25,30 +25,63 @@ public class Asset {
     private long remaining;
     private long minimumMembershipLevel;
     
-
-    public Asset(long assetId, long productId, String name, String description, AssetTypes assetType, long creatorId, String creatorName, long iconImageAssetId, LocalDateTime created, LocalDateTime updated, long price, long sales, boolean newt, boolean forSale, boolean publicDomain, boolean limited, boolean limitedUnique, long remaining, long minimumMembershipLevel) {
+    public void setAssetId(long assetId) {
         this.assetId = assetId;
+    }
+    public void setProductId(long productId) {
         this.productId = productId;
+    }
+    public void setName(String name) {
         this.name = name;
+    }
+    public void setDescription(String description) {
         this.description = description;
+    }
+    public void setAssetType(AssetTypes assetType) {
         this.assetType = assetType;
+    }
+    public void setCreatorId(long creatorId) {
         this.creatorId = creatorId;
+    }
+    public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
+    }
+    public void setIconImageAssetId(long iconImageAssetId) {
         this.iconImageAssetId = iconImageAssetId;
+    }
+    public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+    public void setPrice(long price) {
         this.price = price;
+    }
+    public void setSales(long sales) {
         this.sales = sales;
+    }
+    public void setNewt(boolean newt) {
         this.newt = newt;
+    }
+    public void setForSale(boolean forSale) {
         this.forSale = forSale;
+    }
+    public void setPublicDomain(boolean publicDomain) {
         this.publicDomain = publicDomain;
+    }
+    public void setLimited(boolean limited) {
         this.limited = limited;
+    }
+    public void setLimitedUnique(boolean limitedUnique) {
         this.limitedUnique = limitedUnique;
+    }
+    public void setRemaining(long remaining) {
         this.remaining = remaining;
+    }
+    public void setMinimumMembershipLevel(long minimumMembershipLevel) {
         this.minimumMembershipLevel = minimumMembershipLevel;
     }
-    
-
 
     public long getAssetId() {
         return this.assetId;

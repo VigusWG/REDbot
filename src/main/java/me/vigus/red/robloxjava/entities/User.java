@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-import me.vigus.red.robloxjava.Asset;
-import me.vigus.red.robloxjava.Badge;
-import me.vigus.red.robloxjava.Outfit;
 import me.vigus.red.robloxjava.builders.UserBuilder;
 
 public class User {
@@ -37,11 +34,14 @@ public class User {
     private Long id;
     private boolean isBanned;
     private Date created;
+
+    private ArrayList<String> previousNames;
+
     
     //counts
-    private Long friendCount;
-    private Long followerCount;
-    private Long followingCount;
+    private Integer friendCount;
+    private Integer followerCount;
+    private Integer followingCount;
 
     //friends
     private ArrayList<User> friends;
@@ -49,11 +49,29 @@ public class User {
     private ArrayList<User> followings;   
 
     private String thumbnail;
-    private Long ammountOfOutfits;
+    private Integer ammountOfOutfits;
     private ArrayList<Outfit> outfits;
     
     private ArrayList<Asset> favoriteGames;
+    private ArrayList<UserInGroup> groups;
 
+        
+    public ArrayList<String> getPreviousNames() {
+        return this.previousNames;
+    }
+
+    public void setPreviousNames(ArrayList<String> previousNames) {
+        this.previousNames = previousNames;
+    }
+
+    public ArrayList<UserInGroup> getGroups() {
+        return this.groups;
+    }
+
+    public void setGroups(ArrayList<UserInGroup> groups) {
+        this.groups = groups;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -72,13 +90,13 @@ public class User {
     public void setCreated(Date created) {
         this.created = created;
     }
-    public void setFriendCount(Long friendCount) {
+    public void setFriendCount(Integer friendCount) {
         this.friendCount = friendCount;
     }
-    public void setFollowerCount(Long followerCount) {
+    public void setFollowerCount(Integer followerCount) {
         this.followerCount = followerCount;
     }
-    public void setFollowingCount(Long followingCount) {
+    public void setFollowingCount(Integer followingCount) {
         this.followingCount = followingCount;
     }
     public void setFriends(ArrayList<User> friends) {
@@ -93,7 +111,7 @@ public class User {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
-    public void setAmmountOfOutfits(Long ammountOfOutfits) {
+    public void setAmmountOfOutfits(Integer ammountOfOutfits) {
         this.ammountOfOutfits = ammountOfOutfits;
     }
     public void setOutfits(ArrayList<Outfit> outfits) {
@@ -135,15 +153,15 @@ public class User {
         return this.created;
     }
 
-    public Long getFriendCount() {
+    public Integer getFriendCount() {
         return this.friendCount;
     }
 
-    public Long getFollowerCount() {
+    public Integer getFollowerCount() {
         return this.followerCount;
     }
 
-    public Long getFollowingCount() {
+    public Integer getFollowingCount() {
         return this.followingCount;
     }
 
@@ -163,7 +181,7 @@ public class User {
         return this.thumbnail;
     }
 
-    public Long getAmmountOfOutfits() {
+    public Integer getAmmountOfOutfits() {
         return this.ammountOfOutfits;
     }
 

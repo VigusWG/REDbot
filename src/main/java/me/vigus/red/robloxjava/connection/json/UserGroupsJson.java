@@ -1,6 +1,7 @@
 package me.vigus.red.robloxjava.connection.json;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.concurrent.CompletionException;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,16 +28,26 @@ public class UserGroupsJson {
     private String name;
     private String description;
     private String ownerBuildersClubMembershipType;
-    private Integer ownerUserId;
+    private Long ownerUserId;
     private String ownerUsername;
     private String ownerDisplayName;
-    private Object shout;
+    private String shout;
+    private Long shoutUserId;
+    private String shoutUsername;
+    private String shoutDisplayName;
     private Integer memberCount;
     private Boolean isBuildersClubOnly;
     private Boolean publicEntryAllowed;
     private Integer roleId;
     private String roleName;
     private Integer roleRank;
+    private Boolean locked;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private Date created;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private Date updated;
+
 
     @JsonProperty("errors")
     public List<ErrorJson> errors = null;
@@ -46,16 +58,32 @@ public class UserGroupsJson {
         this.id = (Integer)group.get("id");
         this.name= (String)group.get("name");
         this.description= (String)group.get("description");
-        this.shout= (String)group.get("shout");
+        
         this.memberCount = (Integer)group.get("memberCount");
         this.isBuildersClubOnly = (Boolean)group.get("isBuildersClubOnly");
         this.publicEntryAllowed = (Boolean)group.get("publicEntryAllowed");
+        this.locked = (Boolean) group.get("isLocked");
+        this.created = (Date) group.get("created"); 
+        this.updated = (Date) group.get("updated"); 
+
 
         Map<String,Object> owner = (Map<String,Object>)group.get("owner");
         this.ownerUsername = (String)owner.get("username");
         this.ownerDisplayName = (String)owner.get("displayName");
         this.ownerBuildersClubMembershipType = (String)owner.get("buildersClubMembershipType"); 
-        this.ownerUserId = (Integer)owner.get("userId");
+        this.ownerUserId = ((Number)owner.get("userId")).longValue();
+
+        //Shouts dont work (no its not the code its the api even tho the code wouldnt work) tl;dr: fuck off
+        if (group.get("shout") == null){
+            this.shoutUsername = null;
+            this.shoutDisplayName = null;
+            this.shoutUserId = null;
+        }else{
+            Map<String,Object> shout2 = (Map<String,Object>)group.get("shout");
+            this.shoutUsername = (String)shout2.get("username");
+            this.shoutDisplayName = (String)shout2.get("displayName");
+            this.shoutUserId = (Long)shout2.get("userId");
+        }
     }
 
     @JsonProperty("role")
@@ -97,6 +125,66 @@ public class UserGroupsJson {
     }
 
 
+    public Long getShoutUserId() {
+        return this.shoutUserId;
+    }
+
+    public void setShoutUserId(long shoutUserId) {
+        this.shoutUserId = shoutUserId;
+    }
+
+    public String getShoutUsername() {
+        return this.shoutUsername;
+    }
+
+    public void setShoutUsername(String shoutUsername) {
+        this.shoutUsername = shoutUsername;
+    }
+
+    public String getShoutDisplayName() {
+        return this.shoutDisplayName;
+    }
+
+    public void setShoutDisplayName(String shoutDisplayName) {
+        this.shoutDisplayName = shoutDisplayName;
+    }
+
+    public Boolean isLocked() {
+        return this.locked;
+    }
+
+    public Boolean getLocked() {
+        return this.locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return this.updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public List<ErrorJson> getErrors() {
+        return this.errors;
+    }
+
+    public void setErrors(List<ErrorJson> errors) {
+        this.errors = errors;
+    }
+
     public Integer getId() {
         return this.id;
     }
@@ -129,11 +217,11 @@ public class UserGroupsJson {
         this.ownerBuildersClubMembershipType = ownerBuildersClubMembershipType;
     }
 
-    public Integer getOwnerUserId() {
+    public Long getOwnerUserId() {
         return this.ownerUserId;
     }
 
-    public void setOwnerUserId(Integer ownerUserId) {
+    public void setOwnerUserId(Long ownerUserId) {
         this.ownerUserId = ownerUserId;
     }
 
@@ -151,14 +239,6 @@ public class UserGroupsJson {
 
     public void setOwnerDisplayName(String ownerDisplayName) {
         this.ownerDisplayName = ownerDisplayName;
-    }
-
-    public Object getShout() {
-        return this.shout;
-    }
-
-    public void setShout(Object shout) {
-        this.shout = shout;
     }
 
     public Integer getMemberCount() {

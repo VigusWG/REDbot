@@ -2,9 +2,9 @@ package me.vigus.red.robloxjava.entities;
 
 public class UserInGroup extends Group{
 
-    private int roleId;
+    private Integer roleId;
     private String roleName;
-    private int roleRank;
+    private Integer roleRank;
     
     private User user;
 
@@ -14,11 +14,11 @@ public class UserInGroup extends Group{
     }
 
 
-    public int getRoleId() {
+    public Integer getRoleId() {
         return this.roleId;
     }
 
-    public void setRoleId(int roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
@@ -30,11 +30,11 @@ public class UserInGroup extends Group{
         this.roleName = roleName;
     }
 
-    public int getRoleRank() {
+    public Integer getRoleRank() {
         return this.roleRank;
     }
 
-    public void setRoleRank(int roleRank) {
+    public void setRoleRank(Integer roleRank) {
         this.roleRank = roleRank;
     }
 

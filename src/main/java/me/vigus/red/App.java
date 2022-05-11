@@ -1,16 +1,24 @@
 package me.vigus.red;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import javax.sound.midi.Track;
 
 import me.vigus.red.robloxjava.builders.UserBuilder;
+import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
 import me.vigus.red.robloxjava.connection.json.UserGroupsJson;
+import me.vigus.red.robloxjava.connection.structs.ThumbnailRequest;
 import me.vigus.red.robloxjava.entities.Group;
+import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
+import me.vigus.red.robloxjava.enums.ThumnailBatch;
+import me.vigus.red.robloxjava.enums.ThumnailFormat;
+import me.vigus.red.robloxjava.enums.ThumnailSize;
+import net.dv8tion.jda.api.entities.MessageEmbed.Thumbnail;
 public class App
 {
     public static void main(String[] args) throws InterruptedException, ExecutionException
@@ -49,15 +57,31 @@ public class App
         //     System.out.println(i.getRoleName());
         // }  
 
-        User vigus = new UserBuilder(1999999999)
+        User vigus = new UserBuilder(175135924)
             .setBasicUser(true)
-            //.setGroups(true)
-            //.setPreviousNames(true)
+            .setFriends(true)
+            .setThumbnail(true)
+            .setGroups(true)
+            .setPreviousNames(true)
+            .setAvatar(true)
+            .setOutfits(true)
             .build();
 
         System.out.println(vigus.getName());
         System.out.println("Is banned: " +vigus.getIsBanned());
+
+
+        System.out.println(vigus.getAmmountOfOutfits());
+
+        for (Outfit out : vigus.getOutfits()){
+            System.out.println(out.getName());
+        }
+
+        System.out.println(vigus.getThumbnail());
+
         
+
+
         // for (String name : vigus.getPreviousNames()){
         //     System.out.println(name);
         // }

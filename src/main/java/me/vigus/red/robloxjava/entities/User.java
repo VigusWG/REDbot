@@ -50,14 +50,24 @@ public class User {
 
     private String thumbnail;
     private Integer ammountOfOutfits;
-    private ArrayList<Outfit> outfits;
+    private ArrayList<Outfit> outfits = new ArrayList<>();
     
-    private ArrayList<Asset> favoriteGames;
-    private ArrayList<UserInGroup> groups;
+    private ArrayList<Asset> favoriteGames = new ArrayList<>();
+    private ArrayList<UserInGroup> groups = new ArrayList<>();
 
+    private Avatar avatar;
         
     public ArrayList<String> getPreviousNames() {
         return this.previousNames;
+    }
+
+
+    public Avatar getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
 
     public void setPreviousNames(ArrayList<String> previousNames) {

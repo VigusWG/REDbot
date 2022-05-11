@@ -1,7 +1,6 @@
 package me.vigus.red.robloxjava.connection.json;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
 import me.vigus.red.robloxjava.exceptions.RequestError;
-public class UserFriends {
+public class UserFollowings {
     private static ObjectMapper objectMapper = new ObjectMapper();
     
     @JsonProperty("id")
@@ -33,14 +32,13 @@ public class UserFriends {
     @JsonProperty("errors")
     public List<ErrorJson> errors = null;
 
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties;
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<UserFriends>> request(long userId){
-        return HTTPConnection.getInstance().makeRequest(String.format("https://friends.roblox.com/v1/users/%s/friends", userId))
+    public static CompletableFuture<ArrayList<UserFollowings>> request(long userId){
+        return HTTPConnection.getInstance().makeRequest(String.format("https://friends.roblox.com/v1/users/%s/followings", userId))
             .thenApply(response -> {
-                ArrayList<UserFriends> it = new ArrayList<>();
+                ArrayList<UserFollowings> it = new ArrayList<>();
                     try {
                         JsonNode jsonNode = objectMapper.readTree(response.body());
                         if (jsonNode.get("errors") != null) {
@@ -49,7 +47,7 @@ public class UserFriends {
                         } else {
                             Iterator<JsonNode> f = jsonNode.get("data").elements();
                             while (f.hasNext()) {
-                                it.add(objectMapper.treeToValue(f.next(), UserFriends.class));
+                                it.add(objectMapper.treeToValue(f.next(), UserFollowings.class));
                             }
                             return it;
                         }
@@ -85,7 +83,9 @@ public class UserFriends {
     public void setName(String name) {
         this.name = name;
     }
-
+    public void setAdditionalProperties(Map<String,Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
 
     public List<ErrorJson> getErrors() {

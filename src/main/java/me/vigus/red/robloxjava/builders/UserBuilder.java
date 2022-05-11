@@ -5,14 +5,24 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
+import me.vigus.red.robloxjava.connection.json.AvatarJson;
 import me.vigus.red.robloxjava.connection.json.FollowerCount;
 import me.vigus.red.robloxjava.connection.json.FollowingCount;
 import me.vigus.red.robloxjava.connection.json.FriendCount;
+import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
+import me.vigus.red.robloxjava.connection.json.UserFollowers;
+import me.vigus.red.robloxjava.connection.json.UserFollowings;
+import me.vigus.red.robloxjava.connection.json.UserFriends;
 import me.vigus.red.robloxjava.connection.json.UserGroupsJson;
 import me.vigus.red.robloxjava.connection.json.UserJson;
+import me.vigus.red.robloxjava.connection.json.UserOutfits;
 import me.vigus.red.robloxjava.connection.json.UserUsernames;
+import me.vigus.red.robloxjava.connection.structs.ThumbnailRequest;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
+import me.vigus.red.robloxjava.enums.ThumnailBatch;
+import me.vigus.red.robloxjava.enums.ThumnailFormat;
+import me.vigus.red.robloxjava.enums.ThumnailSize;
 
 public class UserBuilder {
 
@@ -241,7 +251,7 @@ public class UserBuilder {
                     completableFuture.completeExceptionally(ex);
                     throw new CompletionException(ex);
                 }).whenComplete((request, exception) -> {
-                    ArrayList fut = new ArrayList<>();
+                    ArrayList<UserInGroup> fut = new ArrayList<>();
                     for (UserGroupsJson i: request){
                         UserInGroup userInGroup = new UserInGroup(i.getId());
                         userInGroup.setName(i.getName());
@@ -285,7 +295,21 @@ public class UserBuilder {
         }
 
         if (this.getFriends()){
-            //
+            completables.add(UserFriends.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    ArrayList<User> fut = new ArrayList<>();
+                    for (UserFriends i: request){
+                        User friend = new User(i.getId());
+                        friend.setName(i.getName());
+                        friend.setDisplayName(i.getDisplayName());
+                        fut.add(friend);
+                    }
+                    user.setFriends(fut);
+                    user.setFriendCount(fut.size());
+                }));
         } else if (this.getFriendCount()){
             completables.add(FriendCount.request(this.userId)
             .exceptionally(ex -> {
@@ -297,7 +321,21 @@ public class UserBuilder {
         }
 
         if (this.getFollowers()){
-            //
+            completables.add(UserFollowers.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    ArrayList<User> fut = new ArrayList<>();
+                    for (UserFollowers i: request){
+                        User friend = new User(i.getId());
+                        friend.setName(i.getName());
+                        friend.setDisplayName(i.getDisplayName());
+                        fut.add(friend);
+                    }
+                    user.setFollowers(fut);
+                    user.setFollowerCount(fut.size());
+                }));
         } else if (this.getFollowerCount()){
             completables.add(FollowerCount.request(this.userId)
             .exceptionally(ex -> {
@@ -309,7 +347,21 @@ public class UserBuilder {
         }
 
         if (this.getFollowings()){
-            //
+            completables.add(UserFollowings.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    ArrayList<User> fut = new ArrayList<>();
+                    for (UserFollowings i: request){
+                        User friend = new User(i.getId());
+                        friend.setName(i.getName());
+                        friend.setDisplayName(i.getDisplayName());
+                        fut.add(friend);
+                    }
+                    user.setFollowings(fut);
+                    user.setFollowingCount(fut.size());
+                }));
         } else if (this.getFollowingsCount()){
             completables.add(FollowingCount.request(this.userId)
             .exceptionally(ex -> {
@@ -340,15 +392,34 @@ public class UserBuilder {
         }
 
         if (this.getAvatar()){
-            //
+            completables.add(AvatarJson.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setAvatar(request);
+                }));
         }
 
         if (this.getThumbnail()){
-            //
+            completables.add(ThumbnailJson.request(new ThumbnailRequest(this.userId, ThumnailBatch.AVATARBUST, ThumnailSize.S150, ThumnailFormat.PNG))
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setThumbnail(request.getImageURL());
+                }));
         }
 
         if (this.getOutfits()){
-            //
+            completables.add(UserOutfits.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setOutfits(request.getOutfits());
+                    user.setAmmountOfOutfits(request.getTotal());
+                }));
         }
 
         if (this.getFavoriteGames()){

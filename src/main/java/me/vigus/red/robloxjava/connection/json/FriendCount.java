@@ -7,14 +7,12 @@ import java.util.concurrent.CompletionException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
-public class FriendCount {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    
+public class FriendCount {    
     @JsonProperty("counts")
     private int ammount;
 
@@ -27,7 +25,7 @@ public class FriendCount {
             .thenApply(response -> {
                 FollowingCount it;
                 try {
-                    it = objectMapper.readValue(response.body(), FollowingCount.class);
+                    it = CustomObjectMapper.getMapper().readValue(response.body(), FollowingCount.class);
                 } catch (JsonProcessingException e) {
                     throw new CompletionException(e);
                 }

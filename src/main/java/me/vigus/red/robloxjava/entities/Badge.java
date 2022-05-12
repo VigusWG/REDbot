@@ -1,6 +1,8 @@
 package me.vigus.red.robloxjava.entities;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import me.vigus.red.robloxjava.enums.AssetTypes;
 
 public class Badge {
 
@@ -12,16 +14,40 @@ public class Badge {
     private Boolean enabled;
     private Long iconImageId;
     private Long displayIconImageId;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private Date created;
+    private Date updated;
 
-    private Long pastDayAwardedCount;
-    private Long awardedCount;
-    private int winRatePercentage;
+    private Integer pastDayAwardedCount;
+    private Integer awardedCount;
+    private Float winRatePercentage;
 
     private long awarderId;
-    private String awarderType;
+    private AssetTypes awarderType;
 
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return this.updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public AssetTypes getAwarderType() {
+        return this.awarderType;
+    }
+
+    public void setAwarderType(AssetTypes awarderType) {
+        this.awarderType = awarderType;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -47,28 +73,20 @@ public class Badge {
     public void setDisplayIconImageId(Long displayIconImageId) {
         this.displayIconImageId = displayIconImageId;
     }
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-    public void setPastDayAwardedCount(Long pastDayAwardedCount) {
+
+    public void setPastDayAwardedCount(Integer pastDayAwardedCount) {
         this.pastDayAwardedCount = pastDayAwardedCount;
     }
-    public void setAwardedCount(Long awardedCount) {
+    public void setAwardedCount(Integer awardedCount) {
         this.awardedCount = awardedCount;
     }
-    public void setWinRatePercentage(int winRatePercentage) {
+    public void setWinRatePercentage(Float winRatePercentage) {
         this.winRatePercentage = winRatePercentage;
     }
     public void setAwarderId(long awarderId) {
         this.awarderId = awarderId;
     }
-    public void setAwarderType(String awarderType) {
-        this.awarderType = awarderType;
-    }
-    
+
 
 
     public Long getId() {
@@ -107,23 +125,15 @@ public class Badge {
         return this.displayIconImageId;
     }
 
-    public LocalDateTime getCreated() {
-        return this.created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return this.updated;
-    }
-
-    public Long getPastDayAwardedCount() {
+    public Integer getPastDayAwardedCount() {
         return this.pastDayAwardedCount;
     }
 
-    public Long getAwardedCount() {
+    public Integer getAwardedCount() {
         return this.awardedCount;
     }
 
-    public int getWinRatePercentage() {
+    public Float getWinRatePercentage() {
         return this.winRatePercentage;
     }
 
@@ -131,9 +141,6 @@ public class Badge {
         return this.awarderId;
     }
 
-    public String getAwarderType() {
-        return this.awarderType;
-    }
 
     
 }

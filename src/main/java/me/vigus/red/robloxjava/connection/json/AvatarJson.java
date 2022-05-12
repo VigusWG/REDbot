@@ -13,16 +13,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.entities.Asset;
 import me.vigus.red.robloxjava.entities.Avatar;
 import me.vigus.red.robloxjava.enums.AssetTypes;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class AvatarJson {
-    private static ObjectMapper objectMapper = new ObjectMapper();
 
     @JsonIgnore
     public static CompletableFuture<Avatar> request(long userId){
@@ -33,10 +32,10 @@ public class AvatarJson {
 
                 JsonNode node;
                 try {
-                    node = objectMapper.readTree(response.body());
+                    node = CustomObjectMapper.getMapper().readTree(response.body());
 
                     if (node.get("errors") != null){
-                        ErrorJson error = objectMapper.treeToValue(node.get("errors").get(0), ErrorJson.class);
+                        ErrorJson error = CustomObjectMapper.getMapper().treeToValue(node.get("errors").get(0), ErrorJson.class);
                         throw new CompletionException(new RequestError(error));
                     }
 

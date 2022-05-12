@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import javax.sound.midi.Track;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import me.vigus.red.robloxjava.builders.UserBuilder;
 import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
+import me.vigus.red.robloxjava.connection.json.UserBadges;
 import me.vigus.red.robloxjava.connection.json.UserGroupsJson;
 import me.vigus.red.robloxjava.connection.structs.ThumbnailRequest;
+import me.vigus.red.robloxjava.entities.Badge;
 import me.vigus.red.robloxjava.entities.Group;
 import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.entities.User;
@@ -19,11 +21,14 @@ import me.vigus.red.robloxjava.enums.ThumnailBatch;
 import me.vigus.red.robloxjava.enums.ThumnailFormat;
 import me.vigus.red.robloxjava.enums.ThumnailSize;
 import net.dv8tion.jda.api.entities.MessageEmbed.Thumbnail;
+
 public class App
 {
     public static void main(String[] args) throws InterruptedException, ExecutionException
     {
         System.out.println("Started.");
+            // In case you use Java 8 dates
+        //UserBadges.CustomObjectMapper.getMapper().registerModule(new JavaTimeModule());
         //discordBot.main();
 
         
@@ -65,6 +70,7 @@ public class App
             .setPreviousNames(true)
             .setAvatar(true)
             .setOutfits(true)
+            .setBadges(true)
             .build();
 
         System.out.println(vigus.getName());
@@ -79,7 +85,9 @@ public class App
 
         System.out.println(vigus.getThumbnail());
 
-        
+        for (Badge bad : vigus.getBadges()){
+            System.out.println(bad.getName());
+        }
 
 
         // for (String name : vigus.getPreviousNames()){

@@ -22,10 +22,10 @@ public class discordBot {
     public static void makeBot() throws InterruptedException, LoginException{
         if (bot == null){
             bot = JDABuilder.createLight("NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY", GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
-            .setEventManager(new AnnotatedEventManager())
-            .addEventListeners(new CommandDispatch())
-            .setActivity(Activity.competing("big competitions"))
-            .build();
+                .setEventManager(new AnnotatedEventManager())
+                .addEventListeners(new CommandDispatch())
+                .setActivity(Activity.competing("big competitions"))
+                .build();
 
         bot.awaitReady(); //note: blocking
         }

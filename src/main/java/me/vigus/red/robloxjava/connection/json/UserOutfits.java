@@ -13,15 +13,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class UserOutfits {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-
     private ArrayList<Outfit> outfits = new ArrayList<>();
     
     @JsonProperty("total")
@@ -47,7 +45,7 @@ public class UserOutfits {
             .thenApply(response -> {
                 UserOutfits it;
                 try {
-                    it = objectMapper.readValue(response.body(), UserOutfits.class);
+                    it = CustomObjectMapper.getMapper().readValue(response.body(), UserOutfits.class);
                 } catch (JsonProcessingException e) {
                     throw new CompletionException(e);
                 }

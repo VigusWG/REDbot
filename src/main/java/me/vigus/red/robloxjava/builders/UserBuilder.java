@@ -10,6 +10,7 @@ import me.vigus.red.robloxjava.connection.json.FollowerCount;
 import me.vigus.red.robloxjava.connection.json.FollowingCount;
 import me.vigus.red.robloxjava.connection.json.FriendCount;
 import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
+import me.vigus.red.robloxjava.connection.json.UserBadges;
 import me.vigus.red.robloxjava.connection.json.UserFollowers;
 import me.vigus.red.robloxjava.connection.json.UserFollowings;
 import me.vigus.red.robloxjava.connection.json.UserFriends;
@@ -388,7 +389,13 @@ public class UserBuilder {
         }
 
         if (this.getBadges()){
-            //
+            completables.add(UserBadges.request(this.userId)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setBadges(request);
+                }));
         }
 
         if (this.getAvatar()){

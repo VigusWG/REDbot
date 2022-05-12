@@ -16,15 +16,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.connection.structs.ThumbnailRequest;
 
-public class ThumbnailJson {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    
+public class ThumbnailJson {    
     @JsonProperty("requestId")
     private String requestId;
 
@@ -59,7 +57,7 @@ public class ThumbnailJson {
         StringBuilder x = new StringBuilder("[");
         for (int i=0; i < requests.size(); i++){
             ThumbnailRequest req = requests.get(i);
-            ObjectNode json = objectMapper.createObjectNode();
+            ObjectNode json = CustomObjectMapper.getMapper().createObjectNode();
             json.put("format", req.getFormat().toString());
             json.put("size", req.getSize().getValue());
             json.put("targetId", req.getTargetId());
@@ -75,10 +73,10 @@ public class ThumbnailJson {
                 .thenApply(response -> {
                     ArrayList<ThumbnailJson> it = new ArrayList<>();
                     try {
-                        JsonNode jsonNode = objectMapper.readTree(response.body());
+                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
                         Iterator<JsonNode> f = jsonNode.get("data").elements();
                         while (f.hasNext()) {
-                            ThumbnailJson o = objectMapper.treeToValue(f.next(), ThumbnailJson.class);
+                            ThumbnailJson o = CustomObjectMapper.getMapper().treeToValue(f.next(), ThumbnailJson.class);
                             if (o.getErrorMessage() != ""){
                                 throw new CompletionException(o.getErrorMessage(), null);
                             }

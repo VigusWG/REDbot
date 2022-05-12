@@ -14,9 +14,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -37,16 +37,13 @@ public class UserJson {
         return URI.create(String.format("https://users.roblox.com/v1/users/%s", userId));
     }
     */
-
-    private static ObjectMapper objectMapper = new ObjectMapper();
-
     @JsonIgnore
     public static CompletableFuture<UserJson> request(long userId){
         return HTTPConnection.getInstance().makeRequest(String.format("https://users.roblox.com/v1/users/%s", userId))
             .thenApply(response -> {
                 UserJson it;
                 try {
-                    it = objectMapper.readValue(response.body(), UserJson.class);
+                    it = CustomObjectMapper.getMapper().readValue(response.body(), UserJson.class);
                 } catch (JsonProcessingException e) {
                     throw new CompletionException(e);
                 }

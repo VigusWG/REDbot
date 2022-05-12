@@ -14,13 +14,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.exceptions.RequestError;
-public class UserFriends {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    
+public class UserFriends {    
     @JsonProperty("id")
     private Integer id;
 
@@ -42,14 +40,14 @@ public class UserFriends {
             .thenApply(response -> {
                 ArrayList<UserFriends> it = new ArrayList<>();
                     try {
-                        JsonNode jsonNode = objectMapper.readTree(response.body());
+                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
                         if (jsonNode.get("errors") != null) {
                             throw new CompletionException(new RequestError(
-                                    objectMapper.treeToValue(jsonNode.get("errors").get(0), ErrorJson.class)));
+                                    CustomObjectMapper.getMapper().treeToValue(jsonNode.get("errors").get(0), ErrorJson.class)));
                         } else {
                             Iterator<JsonNode> f = jsonNode.get("data").elements();
                             while (f.hasNext()) {
-                                it.add(objectMapper.treeToValue(f.next(), UserFriends.class));
+                                it.add(CustomObjectMapper.getMapper().treeToValue(f.next(), UserFriends.class));
                             }
                             return it;
                         }

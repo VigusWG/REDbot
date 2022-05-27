@@ -1,18 +1,16 @@
 package me.vigus.red.discordbot.command.slashcommands;
 
-import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
+import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
-import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.discordbot.command.interfaces.Buttons;
+import me.vigus.red.discordbot.command.interfaces.SlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
-public class Help extends SlashCommand{
+public class Help extends Command implements SlashCommand, Buttons{
 
     public Help(){
         name = "help";
@@ -25,147 +23,26 @@ public class Help extends SlashCommand{
     }
 
     @Override
-    public CustomEmbedBuilder execute(SlashCommandInteractionEvent event) {
-        
-        CompletableFuture<HttpResponse<String>> followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        CompletableFuture<HttpResponse<String>> followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        CompletableFuture<HttpResponse<String>> friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        followers = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followers/count");
-        followings = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/followings/count");
-        friends = HTTPConnection.getInstance().makeRequest("https://friends.roblox.com/v1/users/23609989/friends/count");
-        
-        
-        try {
-            friends.get();
-            followers.get();
-            followings.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        
-
+    public void execute(SlashCommandInteractionEvent event) {
         String f = "Shut it fatso";
         CustomEmbedBuilder b = new CustomEmbedBuilder();
-        b.setTitle("pLEASE WORK");
+        b.setTitle("Help");
         b.setDescription(f);
         b.addDefaults();
         b.addField("filed", "value", false);
-        return b;
+        event.replyEmbeds(b.formattedBuild())
+            .addActionRow(
+                Button.danger("help_danger", "DANGER")
+            )
+            .queue();
     }
 
     @Override
     public void onButtonPressed(ButtonInteractionEvent event) {
-        
+        System.out.println("Button pressed");
+        event.reply("WELL DONE IDIOT").queue();
     }
 
-    @Override
-    public void onMenuInteraction(SelectMenuInteractionEvent event) {
-        
-    }
+    
+
 }

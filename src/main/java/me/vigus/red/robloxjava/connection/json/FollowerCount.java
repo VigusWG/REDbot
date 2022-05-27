@@ -13,7 +13,7 @@ import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class FollowerCount {    
-    @JsonProperty("counts")
+    @JsonProperty("count")
     private int ammount;
 
     @JsonProperty("errors")

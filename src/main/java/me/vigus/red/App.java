@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import javax.security.auth.login.LoginException;
+
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import me.vigus.red.discordbot.discordBot;
 import me.vigus.red.robloxjava.builders.UserBuilder;
 import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
 import me.vigus.red.robloxjava.connection.json.UserBadges;
@@ -24,12 +27,12 @@ import net.dv8tion.jda.api.entities.MessageEmbed.Thumbnail;
 
 public class App
 {
-    public static void main(String[] args) throws InterruptedException, ExecutionException
+    public static void main(String[] args) throws InterruptedException, ExecutionException, LoginException
     {
         System.out.println("Started.");
             // In case you use Java 8 dates
         //UserBadges.CustomObjectMapper.getMapper().registerModule(new JavaTimeModule());
-        //discordBot.main();
+        discordBot.main();
 
         
         // //System.out.println(x.get().body().toString());
@@ -62,32 +65,32 @@ public class App
         //     System.out.println(i.getRoleName());
         // }  
 
-        User vigus = new UserBuilder(175135924)
-            .setBasicUser(true)
-            .setFriends(true)
-            .setThumbnail(true)
-            .setGroups(true)
-            .setPreviousNames(true)
-            .setAvatar(true)
-            .setOutfits(true)
-            .setBadges(true)
-            .build();
+        // User vigus = new UserBuilder(175135924)
+        //     .setBasicUser(true)
+        //     .setFriends(true)
+        //     .setThumbnail(true)
+        //     .setGroups(true)
+        //     .setPreviousNames(true)
+        //     .setAvatar(true)
+        //     .setOutfits(true)
+        //     .setBadges(true)
+        //     .build();
 
-        System.out.println(vigus.getName());
-        System.out.println("Is banned: " +vigus.getIsBanned());
+        // System.out.println(vigus.getName());
+        // System.out.println("Is banned: " +vigus.getIsBanned());
 
 
-        System.out.println(vigus.getAmmountOfOutfits());
+        // System.out.println(vigus.getAmmountOfOutfits());
 
-        for (Outfit out : vigus.getOutfits()){
-            System.out.println(out.getName());
-        }
+        // for (Outfit out : vigus.getOutfits()){
+        //     System.out.println(out.getName());
+        // }
 
-        System.out.println(vigus.getThumbnail());
+        // System.out.println(vigus.getThumbnail());
 
-        for (Badge bad : vigus.getBadges()){
-            System.out.println(bad.getName());
-        }
+        // for (Badge bad : vigus.getBadges()){
+        //     System.out.println(bad.getName());
+        // }
 
 
         // for (String name : vigus.getPreviousNames()){

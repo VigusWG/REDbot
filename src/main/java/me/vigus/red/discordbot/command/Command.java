@@ -11,7 +11,7 @@ public abstract class Command{
     private static HashMap<String, Command> registeredCommands = new HashMap<>();
     
     protected String name;
-    protected Boolean ephemeral = true;
+    protected String description;
 
     public abstract CommandData make();
 

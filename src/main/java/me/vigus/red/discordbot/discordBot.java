@@ -3,10 +3,9 @@ package me.vigus.red.discordbot;
 import javax.security.auth.login.LoginException;
 
 import me.vigus.red.discordbot.command.slashcommands.Help;
-import me.vigus.red.discordbot.command.usercommands.TestUser;
+import me.vigus.red.discordbot.command.usercommands.RightyClicky;
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CommandDispatch;
-import me.vigus.red.discordbot.command.slashcommands.FieldTest;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,7 +15,6 @@ import net.dv8tion.jda.api.hooks.SubscribeEvent;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class discordBot {
-
     static JDA bot;
 
     public static void makeBot() throws InterruptedException, LoginException{
@@ -47,8 +45,7 @@ public class discordBot {
 
     public static void registerCommand(){
         Command.registerCommand(new Help());
-        Command.registerCommand(new FieldTest());
-        Command.registerCommand(new TestUser());
+        Command.registerCommand(new RightyClicky());
     }
 
     public static void main() throws LoginException, InterruptedException
@@ -56,7 +53,6 @@ public class discordBot {
         registerCommand();
         makeBot();
         updateCommands(true);
-
     }
 
 

@@ -6,6 +6,7 @@ import me.vigus.red.discordbot.command.slashcommands.Help;
 import me.vigus.red.discordbot.command.usercommands.RightyClicky;
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CommandDispatch;
+import me.vigus.red.discordbot.command.commands.Check;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -22,7 +23,7 @@ public class discordBot {
             bot = JDABuilder.createLight("NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY", GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .setEventManager(new AnnotatedEventManager())
                 .addEventListeners(new CommandDispatch())
-                .setActivity(Activity.competing("big competitions"))
+                //.setActivity(Activity.competing("big competitions"))
                 .build();
 
         bot.awaitReady(); //note: blocking
@@ -46,6 +47,8 @@ public class discordBot {
     public static void registerCommand(){
         Command.registerCommand(new Help());
         Command.registerCommand(new RightyClicky());
+        Command.registerCommand(new Check());
+
     }
 
     public static void main() throws LoginException, InterruptedException

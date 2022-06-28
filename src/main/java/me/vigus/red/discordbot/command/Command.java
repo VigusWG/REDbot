@@ -12,6 +12,7 @@ public abstract class Command{
     
     protected String name;
     protected String description;
+    protected String helpExplanation;
 
     public abstract CommandData make();
 

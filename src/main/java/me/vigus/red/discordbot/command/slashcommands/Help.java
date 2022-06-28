@@ -4,8 +4,10 @@ import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
 import me.vigus.red.discordbot.command.interfaces.Buttons;
 import me.vigus.red.discordbot.command.interfaces.SlashCommand;
+import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
@@ -19,8 +21,10 @@ public class Help extends Command implements SlashCommand, Buttons{
 
     @Override
     public CommandData make() {
-        return new CommandDataImpl(name, description);
-    }
+
+        return new CommandDataImpl(name, description)
+            .addOptions(robloxUserArgument.getOption());
+        }
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {

@@ -2,9 +2,17 @@ package me.vigus.red.robloxjava.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import me.vigus.red.robloxjava.builders.UserBuilder;
+import me.vigus.red.robloxjava.connection.http.HTTPConnection;
+import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 
 public class User {
 
@@ -217,4 +225,61 @@ public class User {
         return userBuilder.build();
     }
 
+    public static CompletableFuture<Long> idFromUsername(String username){
+        return HTTPConnection.getInstance().makeRequest(String.format("https://www.roblox.com/users/profile?username=%s", username))
+            .thenApply(response -> {
+                if (response.statusCode() != 302){
+                    return null;
+                }
+                Optional<String> location = response.headers().firstValue("Location");
+                if (!location.isPresent()){
+                    return null;
+                }
+                return robloxUserArgument.fromURL(response.uri().getHost() + location.get());
+            });
+    }
+
+    public static CompletableFuture<Long> idFromDiscord(Long disordId) {
+        return HTTPConnection.getInstance()
+                .makeRequest(String.format("https://api.blox.link/v1/user/%s", disordId))
+                .thenApply(response -> {
+                    if (response.statusCode() == 200){
+                        try {
+                            JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
+                            if (jsonNode.get("status").textValue() == "ok") {
+                                return jsonNode.get("primaryAccount").longValue();
+                            }
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            
+                    //Fucking shit code but idc im bored af
+                    try {
+                    return HTTPConnection.getInstance()
+                            .makeRequest(String.format("https://verify.eryn.io/api/user/%s", disordId))
+                            .thenApply(response2 -> {
+                                if (response2.statusCode() != 200){
+                                    return null;
+                                }
+                                try {
+                                    JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response2.body());
+                                    if (jsonNode.get("status").textValue() == "ok") {
+                                        return jsonNode.get("robloxId").longValue();
+                                    }
+                                } catch (JsonProcessingException e) {
+                                    e.printStackTrace();
+                                }
+                                return null;
+                    }).get();
+                    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+                });
+                
+
+            }
 }

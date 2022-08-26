@@ -33,7 +33,7 @@ public class UserFollowings {
     private Map<String, Object> additionalProperties;
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<UserFollowings>> request(long userId){
+    public static CompletableFuture<ArrayList<UserFollowings>> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://friends.roblox.com/v1/users/%s/followings", userId))
             .thenApply(response -> {
                 ArrayList<UserFollowings> it = new ArrayList<>();

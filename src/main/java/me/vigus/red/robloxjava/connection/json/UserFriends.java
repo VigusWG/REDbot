@@ -35,7 +35,7 @@ public class UserFriends {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<UserFriends>> request(long userId){
+    public static CompletableFuture<ArrayList<UserFriends>> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://friends.roblox.com/v1/users/%s/friends", userId))
             .thenApply(response -> {
                 ArrayList<UserFriends> it = new ArrayList<>();

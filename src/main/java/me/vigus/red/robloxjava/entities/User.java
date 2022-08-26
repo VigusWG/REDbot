@@ -225,7 +225,7 @@ public class User {
         return userBuilder.build();
     }
 
-    public static CompletableFuture<Long> idFromUsername(String username){
+    public static CompletableFuture<Long> idFromUsername(String username) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://www.roblox.com/users/profile?username=%s", username))
             .thenApply(response -> {
                 if (response.statusCode() != 302){
@@ -239,7 +239,7 @@ public class User {
             });
     }
 
-    public static CompletableFuture<Long> idFromDiscord(Long disordId) {
+    public static CompletableFuture<Long> idFromDiscord(Long disordId) throws InterruptedException {
         return HTTPConnection.getInstance()
                 .makeRequest(String.format("https://api.blox.link/v1/user/%s", disordId))
                 .thenApply(response -> {

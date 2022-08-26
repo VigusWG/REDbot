@@ -115,12 +115,12 @@ public class UserBadges {
     }
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<Badge>> request(long userId){
+    public static CompletableFuture<ArrayList<Badge>> request(long userId) throws InterruptedException{
         return request(userId, null);
     }
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<Badge>> request(long userId, String cursor){
+    public static CompletableFuture<ArrayList<Badge>> request(long userId, String cursor) throws InterruptedException{
         String url = (cursor == null) ?  String.format("https://badges.roblox.com/v1/users/%s/badges?limit=100", userId) : String.format("https://badges.roblox.com/v1/users/%s/badges?limit=100&cursor=%s", userId, cursor); 
         return HTTPConnection.getInstance()
             .makeRequest(url)

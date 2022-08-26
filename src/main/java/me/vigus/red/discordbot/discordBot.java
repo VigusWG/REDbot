@@ -7,6 +7,7 @@ import me.vigus.red.discordbot.command.usercommands.RightyClicky;
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CommandDispatch;
 import me.vigus.red.discordbot.command.commands.Check;
+import me.vigus.red.discordbot.command.commands.FriendGroupLink;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -48,6 +49,7 @@ public class discordBot {
         Command.registerCommand(new Help());
         Command.registerCommand(new RightyClicky());
         Command.registerCommand(new Check());
+        Command.registerCommand(new FriendGroupLink());
 
     }
 

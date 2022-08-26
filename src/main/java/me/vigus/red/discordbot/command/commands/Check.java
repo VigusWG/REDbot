@@ -26,6 +26,8 @@ public class Check extends Command implements SlashCommand{
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
+        long startTime = System.nanoTime();
+        
         Long userId = robloxUserArgument.fromOption(event.getOption("user").getAsString());
         if (userId == null){
             CustomEmbedBuilder b = new CustomEmbedBuilder();
@@ -33,6 +35,7 @@ public class Check extends Command implements SlashCommand{
             event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
+        long time2 = System.nanoTime();
 
         try {
             User vigus = new UserBuilder(userId)
@@ -46,7 +49,7 @@ public class Check extends Command implements SlashCommand{
                     .setOutfits(true)
                     .setThumbnail(true)
                     .build();
-
+            long time3 = System.nanoTime();
             CustomEmbedBuilder b = new CustomEmbedBuilder();
             b.setTitle(vigus.getName());
             b.setThumbnail(vigus.getThumbnail());
@@ -96,17 +99,21 @@ public class Check extends Command implements SlashCommand{
 
             b.addField("Outfits", outfits.toString(), false);
 
+            long endTime = System.nanoTime();
+            b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
+            
+
             event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
     }
 
     @Override
     public CommandData make() {
         return new CommandDataImpl(name, description)
                 .addOptions(robloxUserArgument.getOption());
-        }
+    }
  
 }

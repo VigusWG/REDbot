@@ -234,21 +234,22 @@ public class UserBuilder {
     }
 
     @SuppressWarnings("rawtypes")
-    public CompletableFuture<User> buildAsync(){
+    public CompletableFuture<User> buildAsync(User user) throws InterruptedException{
         //do some http shit surely? 
         // nah probably in the actually class right?
         // ok changed my mind again
 
         //so http stuff here
 
+        //no clue what these comments are meant to mean lmao
+
         ArrayList<CompletableFuture> completables = new ArrayList<>();
         CompletableFuture<User> completableFuture = new CompletableFuture<>();
-
-        User user = new User(this.userId);
 
         if (this.getGroups()){
             completables.add(UserGroupsJson.request(this.userId)
                 .exceptionally(ex -> {
+                    System.out.println(ex.getLocalizedMessage());
                     completableFuture.completeExceptionally(ex);
                     throw new CompletionException(ex);
                 }).whenComplete((request, exception) -> {
@@ -270,10 +271,15 @@ public class UserBuilder {
                             userInGroup.setShoutPoster(shoutUser);
                         }
 
-                        User owner = new User(i.getOwnerUserId());
-                        owner.setName(i.getOwnerUsername());
-                        owner.setDisplayName(i.getOwnerDisplayName());
-                        userInGroup.setOwner(owner);
+                        if (i.getOwnerUserId() == null){
+                            userInGroup.setOwner(null);
+                        }else{
+                            User owner = new User(i.getOwnerUserId());
+                            owner.setName(i.getOwnerUsername());
+                            owner.setDisplayName(i.getOwnerDisplayName());
+                            userInGroup.setOwner(owner);
+                        }
+                        
 
                         userInGroup.setRoleId(i.getRoleId());
                         userInGroup.setRoleRank(i.getRoleRank());
@@ -432,10 +438,21 @@ public class UserBuilder {
         if (this.getFavoriteGames()){
             //lmao
         }
-
         
         CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).thenRun(() -> completableFuture.complete(user));
         return completableFuture;
+    }
+
+    public CompletableFuture<User> buildAsync() throws InterruptedException {
+        return this.buildAsync(new User(this.userId));
+    }
+
+    public CompletableFuture<User> rebuildAsync(User user) throws InterruptedException {
+        return this.buildAsync(user);
+    }
+
+    public User rebuild(User user) throws InterruptedException, ExecutionException {
+        return this.buildAsync(user).get();
     }
 
     public User build() throws InterruptedException, ExecutionException {

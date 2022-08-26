@@ -47,13 +47,13 @@ public class ThumbnailJson {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonIgnore
-    public static CompletableFuture<ThumbnailJson> request(ThumbnailRequest request){
+    @JsonIgnore 
+    public static CompletableFuture<ThumbnailJson> request(ThumbnailRequest request) throws InterruptedException{
         return request(asList(request)).thenApply(response -> response.get(0));
     }  
 
     @JsonIgnore
-    public static CompletableFuture<List<ThumbnailJson>> request(List<ThumbnailRequest> requests){
+    public static CompletableFuture<List<ThumbnailJson>> request(List<ThumbnailRequest> requests) throws InterruptedException{
         StringBuilder x = new StringBuilder("[");
         for (int i=0; i < requests.size(); i++){
             ThumbnailRequest req = requests.get(i);

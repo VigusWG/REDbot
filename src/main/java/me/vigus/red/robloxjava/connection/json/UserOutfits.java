@@ -40,7 +40,7 @@ public class UserOutfits {
     }
 
     @JsonIgnore
-    public static CompletableFuture<UserOutfits> request(long userId){
+    public static CompletableFuture<UserOutfits> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://avatar.roblox.com/v1/users/%s/outfits", userId))
             .thenApply(response -> {
                 UserOutfits it;

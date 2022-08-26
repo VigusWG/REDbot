@@ -64,12 +64,18 @@ public class UserGroupsJson {
         this.created = (Date) group.get("created"); 
         this.updated = (Date) group.get("updated"); 
 
-
-        Map<String,Object> owner = (Map<String,Object>)group.get("owner");
-        this.ownerUsername = (String)owner.get("username");
-        this.ownerDisplayName = (String)owner.get("displayName");
-        this.ownerBuildersClubMembershipType = (String)owner.get("buildersClubMembershipType"); 
-        this.ownerUserId = ((Number)owner.get("userId")).longValue();
+        if (group.get("owner") == null){
+            this.ownerUsername = null;
+            this.ownerDisplayName = null;
+            this.ownerBuildersClubMembershipType = null;
+            this.ownerUserId = null; 
+        } else{
+            Map<String, Object> owner = (Map<String, Object>) group.get("owner");
+            this.ownerUsername = (String) owner.get("username");
+            this.ownerDisplayName = (String) owner.get("displayName");
+            this.ownerBuildersClubMembershipType = (String) owner.get("buildersClubMembershipType");
+            this.ownerUserId = ((Number) owner.get("userId")).longValue();
+        }
 
         //Shouts dont work (no its not the code its the api even tho the code wouldnt work) tl;dr: fuck off
         if (group.get("shout") == null){
@@ -96,7 +102,7 @@ public class UserGroupsJson {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<UserGroupsJson>> request(long userId) {
+    public static CompletableFuture<ArrayList<UserGroupsJson>> request(long userId) throws InterruptedException {
         return HTTPConnection.getInstance()
                 .makeRequest(String.format("https://groups.roblox.com/v1/users/%s/groups/roles", userId))
                 .thenApply(response -> {
@@ -119,9 +125,7 @@ public class UserGroupsJson {
                     }
 
                 });
-
     }
-
 
     public Long getShoutUserId() {
         return this.shoutUserId;

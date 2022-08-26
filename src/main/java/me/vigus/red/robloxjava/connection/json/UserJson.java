@@ -38,7 +38,7 @@ public class UserJson {
     }
     */
     @JsonIgnore
-    public static CompletableFuture<UserJson> request(long userId){
+    public static CompletableFuture<UserJson> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://users.roblox.com/v1/users/%s", userId))
             .thenApply(response -> {
                 UserJson it;

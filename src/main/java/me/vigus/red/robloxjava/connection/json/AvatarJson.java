@@ -24,7 +24,7 @@ import me.vigus.red.robloxjava.exceptions.RequestError;
 public class AvatarJson {
 
     @JsonIgnore
-    public static CompletableFuture<Avatar> request(long userId){
+    public static CompletableFuture<Avatar> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://avatar.roblox.com/v1/users/%s/avatar", userId))
             .thenApply(response -> {
 

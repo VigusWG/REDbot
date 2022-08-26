@@ -20,7 +20,7 @@ public class FollowingCount {
     public List<ErrorJson> errors = null;
 
     @JsonIgnore
-    public static CompletableFuture<FollowingCount> request(long userId){
+    public static CompletableFuture<FollowingCount> request(long userId) throws InterruptedException{
         return HTTPConnection.getInstance().makeRequest(String.format("https://friends.roblox.com/v1/users/%s/followings/count", userId))
             .thenApply(response -> {
                 FollowingCount it;

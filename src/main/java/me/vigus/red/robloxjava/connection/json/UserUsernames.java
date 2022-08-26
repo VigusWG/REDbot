@@ -17,7 +17,7 @@ public class UserUsernames {
     private ArrayList<String> names;
 
     @JsonIgnore
-    public static CompletableFuture<UserUsernames> request(long userId) {
+    public static CompletableFuture<UserUsernames> request(long userId) throws InterruptedException {
         return HTTPConnection.getInstance()
                 .makeRequest(String.format("https://users.roblox.com/v1/users/%s/username-history?limit=100", userId))
                 .thenApply(response -> {

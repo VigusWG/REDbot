@@ -7,6 +7,8 @@ import me.vigus.red.discordbot.command.CustomEmbedBuilder;
 import me.vigus.red.discordbot.command.interfaces.SlashCommand;
 import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import me.vigus.red.robloxjava.builders.UserBuilder;
+import me.vigus.red.robloxjava.connection.json.AssetInformationJson;
+import me.vigus.red.robloxjava.entities.Asset;
 import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
@@ -26,7 +28,6 @@ public class Check extends Command implements SlashCommand{
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        long startTime = System.nanoTime();
         
         Long userId = robloxUserArgument.fromOption(event.getOption("user").getAsString());
         if (userId == null){
@@ -35,7 +36,6 @@ public class Check extends Command implements SlashCommand{
             event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
-        long time2 = System.nanoTime();
 
         try {
             User vigus = new UserBuilder(userId)
@@ -48,8 +48,9 @@ public class Check extends Command implements SlashCommand{
                     .setGroups(true)
                     .setOutfits(true)
                     .setThumbnail(true)
+                    .setAvatar(true)
                     .build();
-            long time3 = System.nanoTime();
+            
             CustomEmbedBuilder b = new CustomEmbedBuilder();
             b.setTitle(vigus.getName());
             b.setThumbnail(vigus.getThumbnail());
@@ -64,7 +65,7 @@ public class Check extends Command implements SlashCommand{
                     .append("\nFriends: ")
                     .append(vigus.getFriendCount())
                     .append("\nNumber of badges: ")
-                    .append(vigus.getFavoriteGames().size())
+                    .append(vigus.getBadges().size())
                     .append("\nNumber of favourite games: ")
                     .append(vigus.getFavoriteGames().size())
                     .append("\n\nDescription: ")
@@ -99,8 +100,15 @@ public class Check extends Command implements SlashCommand{
 
             b.addField("Outfits", outfits.toString(), false);
 
-            long endTime = System.nanoTime();
-            b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
+            StringBuilder avatar = new StringBuilder();
+            for (AssetInformationJson ass : vigus.getAvatar().getAssets()){
+                String price = ass.getPriceInRobux() == null ? "" :  " currently costs " + ass.getPriceInRobux().toString() + " robux";
+                avatar.append(String.format("%n[%s](https://www.roblox.com/catalog/%d)%s", ass.getName(), ass.getAssetId(), price));
+            }
+            b.addField("Currently Wearing", avatar.toString(), false);
+
+            // long endTime = System.nanoTime();
+            // b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
             
 
             event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();

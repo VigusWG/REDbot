@@ -215,7 +215,9 @@ public class User {
         return this.badges;
     }
     
-
+    public String getProfileURL(){
+        return String.format("https://www.roblox.com/users/%d/profile", this.id);
+    }
 
     public User(long id) {
         this.id = id;
@@ -246,7 +248,7 @@ public class User {
                     if (response.statusCode() == 200){
                         try {
                             JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
-                            if (jsonNode.get("status").textValue() == "ok") {
+                            if (jsonNode.get("status").textValue().equals("ok")) {
                                 return jsonNode.get("primaryAccount").longValue();
                             }
                         } catch (JsonProcessingException e) {

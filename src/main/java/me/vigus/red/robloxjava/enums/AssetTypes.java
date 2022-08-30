@@ -70,12 +70,21 @@ public enum AssetTypes
     FONTFAMILY(73),
     FONTFACE(74);
 
-    private final int value;
+    private final Integer value;
 
     AssetTypes(final int newValue) {
         value = newValue;
     }
 
     public int getValue() { return value; }
+
+    public static AssetTypes typeOfValue(Integer value) {
+        for (AssetTypes e : values()) {
+            if (e.value.equals(value)) {
+                return e;
+            }
+        }
+        return null;
+    }
 
 }

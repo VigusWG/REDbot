@@ -6,6 +6,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
 import me.vigus.red.robloxjava.connection.json.AvatarJson;
+import me.vigus.red.robloxjava.connection.json.FavoriteItems;
 import me.vigus.red.robloxjava.connection.json.FollowerCount;
 import me.vigus.red.robloxjava.connection.json.FollowingCount;
 import me.vigus.red.robloxjava.connection.json.FriendCount;
@@ -21,6 +22,7 @@ import me.vigus.red.robloxjava.connection.json.UserUsernames;
 import me.vigus.red.robloxjava.connection.structs.ThumbnailRequest;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
+import me.vigus.red.robloxjava.enums.AssetTypes;
 import me.vigus.red.robloxjava.enums.ThumnailBatch;
 import me.vigus.red.robloxjava.enums.ThumnailFormat;
 import me.vigus.red.robloxjava.enums.ThumnailSize;
@@ -436,7 +438,13 @@ public class UserBuilder {
         }
 
         if (this.getFavoriteGames()){
-            //lmao
+            completables.add(FavoriteItems.request(this.userId, AssetTypes.PLACE, 1)
+                .exceptionally(ex -> {
+                    completableFuture.completeExceptionally(ex);
+                    throw new CompletionException(ex);
+                }).whenComplete((request, exception) -> {
+                    user.setFavoriteGames(request);
+                }));
         }
         
         CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).thenRun(() -> completableFuture.complete(user));

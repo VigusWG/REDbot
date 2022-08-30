@@ -11,6 +11,13 @@ public class RequestError extends Exception{
         this.errorJson = errorJson;
     }
 
+    public RequestError(String error) {
+        super(error);
+        this.errorJson = new ErrorJson();
+        this.errorJson.setMessage(error);
+        this.errorJson.setUserFacingMessage(error);
+    }
+
     public ErrorJson getErrorJson() {
         return this.errorJson;
     }

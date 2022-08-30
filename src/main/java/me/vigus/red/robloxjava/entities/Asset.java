@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import me.vigus.red.robloxjava.enums.AssetTypes;
 
 public class Asset {
-    private long assetId;
+    private Number assetId;
     private long productId;
     private String name;
     private String description;
@@ -25,8 +25,8 @@ public class Asset {
     private long remaining;
     private long minimumMembershipLevel;
     
-    public void setAssetId(long assetId) {
-        this.assetId = assetId;
+    public void setAssetId(Number number) {
+        this.assetId = number;
     }
     public void setProductId(long productId) {
         this.productId = productId;
@@ -83,7 +83,7 @@ public class Asset {
         this.minimumMembershipLevel = minimumMembershipLevel;
     }
 
-    public long getAssetId() {
+    public Number getAssetId() {
         return this.assetId;
     }
 
@@ -178,7 +178,5 @@ public class Asset {
     public long getMinimumMembershipLevel() {
         return this.minimumMembershipLevel;
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 package me.vigus.red.robloxjava.connection.json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -60,18 +61,18 @@ public class AvatarJson {
                     av.setBodyType(scales.get("bodyType").floatValue());
 
                     Iterator<JsonNode> f = node.get("assets").elements();
+                    ArrayList<CompletableFuture<AssetInformationJson>> posFut = new ArrayList();
                     while (f.hasNext()) {
                         JsonNode next = f.next();
-                        Asset item = new Asset();
-                        item.setAssetId(next.get("id").longValue());
-                        item.setName(next.get("name").asText());
-                        item.setAssetType(AssetTypes.valueOf(next.get("assetType").get("name").asText().toUpperCase()));                        
-                        item.setAssetType(AssetTypes.valueOf("HAT"));                        
-                        
-                        av.getAssets().add(item);
+                        posFut.add(
+                            AssetInformationJson.request(next.get("id").longValue())
+                                .whenComplete((req, exc) -> av.getAssets().add(req))
+                        );
                     }
 
-                } catch (JsonProcessingException e) {
+                    CompletableFuture.allOf(posFut.toArray(new CompletableFuture[0])).join();                    
+
+                } catch (JsonProcessingException | InterruptedException e) {
                     throw new CompletionException(e);
                 }
                 return av;

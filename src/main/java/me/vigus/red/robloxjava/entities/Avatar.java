@@ -2,6 +2,8 @@ package me.vigus.red.robloxjava.entities;
 
 import java.util.ArrayList;
 
+import me.vigus.red.robloxjava.connection.json.AssetInformationJson;
+
 public class Avatar {
     private Long userId;
 
@@ -24,7 +26,7 @@ public class Avatar {
     private Integer rightLegColorId;
     private Integer leftLegColorId;
 
-    private ArrayList<Asset> assets = new ArrayList<>();
+    private ArrayList<AssetInformationJson> assets = new ArrayList<>();
 
 
     public Long getUserId() {
@@ -163,11 +165,11 @@ public class Avatar {
         this.leftLegColorId = leftLegColorId;
     }
 
-    public ArrayList<Asset> getAssets() {
+    public ArrayList<AssetInformationJson> getAssets() {
         return this.assets;
     }
 
-    public void setAssets(ArrayList<Asset> assets) {
+    public void setAssets(ArrayList<AssetInformationJson> assets) {
         this.assets = assets;
     }
 

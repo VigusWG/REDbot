@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -27,10 +28,43 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
 public class FriendGroupLink extends Command implements SlashCommand{
-
+    
     public FriendGroupLink(){
         name = "friendgrouplink";
-        description = "pls make this";
+        description = "Count user's friends groups and get the top ten.";
+    }
+
+    class GroupsAmmount extends Group implements Comparable<GroupsAmmount>{
+        private int ammount = 1;
+
+        public GroupsAmmount(Group group) {
+            super(group.getId());
+            this.setName(group.getName());
+            this.setDescription(group.getDescription());
+            this.setOwner(group.getOwner());
+            this.setMemberCount(group.getMemberCount());
+            this.setCreated(group.getCreated());
+            this.setUpdated(group.getUpdated());
+            this.setIsLocked(group.getIsLocked());
+            this.setPublicEntryAllowed(group.isPublicEntryAllowed());
+            this.setIsBuildersClubOnly(group.isPublicEntryAllowed());
+            this.setShoutBody(group.getShoutBody());
+            this.setShoutPoster(group.getShoutPoster());
+        }
+
+        public GroupsAmmount addOne(){
+            this.ammount += 1;
+            return this;
+        }
+
+        public int getAmmount(){
+            return ammount;
+        }
+
+        @Override
+        public int compareTo(GroupsAmmount o) {
+            return o.getAmmount() - this.getAmmount();
+        }
     }
 
     @Override
@@ -52,38 +86,41 @@ public class FriendGroupLink extends Command implements SlashCommand{
                 .setThumbnail(true)
                 .build();
         } catch (Exception e){
-            System.out.println(e);
+            CustomEmbedBuilder b = new CustomEmbedBuilder();
+            b.setTitle("Error. Invalid User.");
+            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
 
         try {
             CustomEmbedBuilder b = new CustomEmbedBuilder();
-            b.setTitle(user.getName());
+            b.setTitle(String.format("List of Groups from Friends for %s",
+                    user.getName()));
+
             b.setThumbnail(user.getThumbnail());
 
             b.setDescription("Most popular groups their friends are in.");
 
-            ConcurrentHashMap<String, Integer> groupNumbers = new ConcurrentHashMap<>();
+            ConcurrentHashMap<Long, GroupsAmmount> groups = new ConcurrentHashMap<>();
             ArrayList<CompletableFuture<User>> reqs = new ArrayList<>();
-            for (User friend : user.getFriends().stream().limit(160).toList()){
-                
-                //just to test
-            
-
-                //User friend = user.getFriends().get(i); //vs code was buggen when i did it the normal way
+            for (User friend : user.getFriends()){
                 CompletableFuture<User> friend2 = new UserBuilder(friend.getId())
                     .setGroups(true)
                     .rebuildAsync(friend)
-                    .exceptionally(ex -> {System.out.println(ex.getLocalizedMessage()); return null;})
+                    .exceptionally(ex -> {
+                        System.out.println(ex.getLocalizedMessage());
+                        return null;
+                    })
                     .whenComplete((req, exc) -> {
                         if (req == null){
+                            System.out.println("req was null");
                             return;
                         }
                         if (exc != null) {
-                            System.out.println(exc.getMessage());
+                            System.out.println(exc.getLocalizedMessage());
                             return;
                         }
-                        req.getGroups().forEach(x -> groupNumbers.merge(x.getName(), 1, Integer::sum));                       
+                        req.getGroups().forEach(x -> groups.merge(x.getId(), new GroupsAmmount(x), (g,h) -> g.addOne()));                       
                     });
 
                 reqs.add(friend2);
@@ -108,22 +145,17 @@ public class FriendGroupLink extends Command implements SlashCommand{
             //         ;
             //     }
             // });
-            Map<String, Integer> topTen = groupNumbers.entrySet().stream()
-                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                    .limit(10)
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new)); //no fucking clue what this is about: i stole it
+            List<GroupsAmmount> topTen = groups.values().stream()
+                .sorted()
+                .limit(10)
+                .collect(Collectors.toList());
             
-            System.out.println(topTen);
-
-            for (Entry<String, Integer> ent : topTen.entrySet()) {
-               b.addField(ent.getKey(), ent.getValue().toString(), false);
+            StringBuilder stringBuild = new StringBuilder();
+            for (GroupsAmmount ent : topTen) {
+               stringBuild.append(String.format("%d friends in group [%s](https://www.roblox.com/groups/%d)%n", ent.getAmmount(), ent.getName(), ent.getId()));
             }
             
-                // Map<Integer, String> sortedMap = groupNumbers.entrySet().stream()
-            //         .sorted(Entry.comparingByValue())
-            //         .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-            //                 (e1, e2) -> e1, LinkedHashMap::new));
+            b.setDescription(stringBuild.toString());
             event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
 
         } catch (Exception e){

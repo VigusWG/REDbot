@@ -6,8 +6,10 @@ import me.vigus.red.discordbot.command.slashcommands.Help;
 import me.vigus.red.discordbot.command.usercommands.RightyClicky;
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CommandDispatch;
+import me.vigus.red.discordbot.command.commands.BadgeGameLink;
 import me.vigus.red.discordbot.command.commands.Check;
 import me.vigus.red.discordbot.command.commands.FriendGroupLink;
+import me.vigus.red.discordbot.command.commands.View;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -33,7 +35,7 @@ public class discordBot {
 
     public static void updateCommands(boolean debugMode){
         if (debugMode){
-            long guildId = 941005587540508753L;
+            long guildId = 950081089278451773L;
             bot.getGuildById(guildId).updateCommands()
                 .addCommands(Command.getAllCommands())
                 .queue();
@@ -50,7 +52,8 @@ public class discordBot {
         Command.registerCommand(new RightyClicky());
         Command.registerCommand(new Check());
         Command.registerCommand(new FriendGroupLink());
-
+        Command.registerCommand(new View());
+        Command.registerCommand(new BadgeGameLink());
     }
 
     public static void main() throws LoginException, InterruptedException

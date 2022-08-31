@@ -22,7 +22,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class discordBot {
     static JDA bot;
-    static String token = "NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY";
+    static String token;
+
+    public static void setToken(String Token){
+        token = Token;
+    }
 
     public static void makeBot() throws InterruptedException, LoginException{
         if (bot == null){

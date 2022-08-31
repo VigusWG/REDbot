@@ -67,7 +67,7 @@ public class UserJson {
     @JsonProperty("externalAppDisplayName")
     private Object externalAppDisplayName;
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("displayName")
@@ -120,13 +120,13 @@ public class UserJson {
     }
 
     @JsonProperty("id")
-    public Integer getId() {
+    public Long getId() {
     return id;
     }
 
     @JsonProperty("id")
-    public void setId(Integer id) {
-    this.id = id;
+    public void setId(Long id) {
+    this.id = id;   
     }
 
     @JsonProperty("name")

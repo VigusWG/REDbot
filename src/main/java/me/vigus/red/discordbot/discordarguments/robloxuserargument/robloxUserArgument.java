@@ -16,6 +16,11 @@ public abstract class robloxUserArgument{
         return new OptionData(OptionType.STRING, "user", "A discord user mention, roblox username, roblox id or roblox link", isRequired, false);
     }
 
+    public static OptionData getDiscordUserOption(boolean isRequired) {
+        return new OptionData(OptionType.USER, "discorsuser",
+                "A discord user mention", isRequired, false);
+    }
+
 
     public static boolean isNumeric(String str) {
         // RIGHT OFF OF STACK OVERFLOW LETS FUCKEN GOOOOO

@@ -10,6 +10,7 @@ import me.vigus.red.robloxjava.connection.json.FavoriteItems;
 import me.vigus.red.robloxjava.connection.json.FollowerCount;
 import me.vigus.red.robloxjava.connection.json.FollowingCount;
 import me.vigus.red.robloxjava.connection.json.FriendCount;
+import me.vigus.red.robloxjava.connection.json.InventoryLocked;
 import me.vigus.red.robloxjava.connection.json.ThumbnailJson;
 import me.vigus.red.robloxjava.connection.json.UserBadges;
 import me.vigus.red.robloxjava.connection.json.UserFollowers;
@@ -45,13 +46,26 @@ public class UserBuilder {
     private boolean outfits = false;
     private boolean favoriteGames = false;
     private boolean previousNames = false;
+    private boolean inventoryLocked = false;
 
 
     public UserBuilder(long userId){
         this.userId = userId;
     }
 
+    public boolean isInventoryLocked() {
+        return this.inventoryLocked;
+    }
 
+    public boolean getInventoryLocked() {
+        return this.inventoryLocked;
+    }
+
+    public UserBuilder setInventoryLocked(boolean inventoryLocked) {
+        this.inventoryLocked = inventoryLocked;
+        return this;
+    }
+    
     public boolean isPreviousNames() {
         return this.previousNames;
     }
@@ -445,6 +459,16 @@ public class UserBuilder {
                 }).whenComplete((request, exception) -> {
                     user.setFavoriteGames(request);
                 }));
+        }
+
+        if (this.getInventoryLocked()){
+            completables.add(InventoryLocked.request(this.userId)
+                    .exceptionally(ex -> {
+                        completableFuture.completeExceptionally(ex);
+                        throw new CompletionException(ex);
+                    }).whenComplete((request, exception) -> {
+                        user.setInvLocked(request);
+                    }));
         }
         
         CompletableFuture.allOf(completables.toArray(new CompletableFuture[0])).thenRun(() -> completableFuture.complete(user));

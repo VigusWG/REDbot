@@ -1,5 +1,8 @@
 package me.vigus.red.robloxjava.entities;
 
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -41,6 +44,9 @@ public class User {
     private String displayName;
     private Long id;
     private boolean isBanned;
+    
+    private boolean invLocked;
+
     private Date created;
 
     private ArrayList<String> previousNames;
@@ -67,6 +73,19 @@ public class User {
         
     public ArrayList<String> getPreviousNames() {
         return this.previousNames;
+    }
+
+
+    public boolean isInvLocked() {
+        return this.invLocked;
+    }
+
+    public boolean getInvLocked() {
+        return this.invLocked;
+    }
+
+    public void setInvLocked(boolean invLocked) {
+        this.invLocked = invLocked;
     }
 
 
@@ -243,45 +262,47 @@ public class User {
 
     public static CompletableFuture<Long> idFromDiscord(Long disordId) throws InterruptedException {
         return HTTPConnection.getInstance()
-                .makeRequest(String.format("https://api.blox.link/v1/user/%s", disordId))
-                .thenApply(response -> {
-                    if (response.statusCode() == 200){
-                        try {
-                            JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
-                            if (jsonNode.get("status").textValue().equals("ok")) {
-                                return jsonNode.get("primaryAccount").longValue();
-                            }
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
+                .makeRequest(String.format("https://verify.eryn.io/api/user/%s", disordId))
+                .thenApply(response2 -> {
+                    try {
+                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response2.body());
+                        if (jsonNode.get("status").textValue().equals("ok")) {
+                            return jsonNode.get("robloxId").longValue();
                         }
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
-            
                     //Fucking shit code but idc im bored af
                     try {
-                    return HTTPConnection.getInstance()
-                            .makeRequest(String.format("https://verify.eryn.io/api/user/%s", disordId))
-                            .thenApply(response2 -> {
-                                if (response2.statusCode() != 200){
-                                    return null;
-                                }
-                                try {
-                                    JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response2.body());
-                                    if (jsonNode.get("status").textValue() == "ok") {
-                                        return jsonNode.get("robloxId").longValue();
+
+                    HttpRequest killMe = HttpRequest.newBuilder()
+                        .GET()
+                        .uri(URI.create(String.format("https://v3.blox.link/developer/discord/%s",
+                                        disordId)))
+                        .header("api-key", "14853ac4-0917-42ae-a25f-fdf93e93ebc3")
+                        .build();
+                    return HTTPConnection.getClient().sendAsync(killMe, HttpResponse.BodyHandlers
+                                .ofString())
+                            .thenApply(response -> {
+                                if (response.statusCode() == 200){
+                                    try {
+                                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
+                                        if (jsonNode.get("success").textValue().equals(true)) {
+                                            return jsonNode.get("user").get("robloxId").longValue();
+                                        }
+                                    } catch (JsonProcessingException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JsonProcessingException e) {
-                                    e.printStackTrace();
                                 }
                                 return null;
                     }).get();
                     
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
 
-                });
-                
-
+            });
+                // I HAVE NO FUCKING CLUE WHAT THIS IS, IM TOO TIRED FOR THIS SHIT
             }
 }

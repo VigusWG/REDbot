@@ -1,182 +1,212 @@
 package me.vigus.red.robloxjava.entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import me.vigus.red.robloxjava.enums.AssetTypes;
 
 public class Asset {
     private Number assetId;
-    private long productId;
+    private Long productId;
     private String name;
     private String description;
     private AssetTypes assetType;
-    private long creatorId;
+    private Long creatorId;
     private String creatorName;
-    private long iconImageAssetId;
-    private LocalDateTime created;
-    private LocalDateTime updated;
-    private long price;
-    private long sales;
-    private boolean newt;
-    private boolean forSale;
-    private boolean publicDomain;
-    private boolean limited;
-    private boolean limitedUnique;
-    private long remaining;
-    private long minimumMembershipLevel;
-    
-    public void setAssetId(Number number) {
-        this.assetId = number;
-    }
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setAssetType(AssetTypes assetType) {
-        this.assetType = assetType;
-    }
-    public void setCreatorId(long creatorId) {
-        this.creatorId = creatorId;
-    }
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
-    }
-    public void setIconImageAssetId(long iconImageAssetId) {
-        this.iconImageAssetId = iconImageAssetId;
-    }
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-    public void setPrice(long price) {
-        this.price = price;
-    }
-    public void setSales(long sales) {
-        this.sales = sales;
-    }
-    public void setNewt(boolean newt) {
-        this.newt = newt;
-    }
-    public void setForSale(boolean forSale) {
-        this.forSale = forSale;
-    }
-    public void setPublicDomain(boolean publicDomain) {
-        this.publicDomain = publicDomain;
-    }
-    public void setLimited(boolean limited) {
-        this.limited = limited;
-    }
-    public void setLimitedUnique(boolean limitedUnique) {
-        this.limitedUnique = limitedUnique;
-    }
-    public void setRemaining(long remaining) {
-        this.remaining = remaining;
-    }
-    public void setMinimumMembershipLevel(long minimumMembershipLevel) {
-        this.minimumMembershipLevel = minimumMembershipLevel;
-    }
+    private Long iconImageAssetId;
+    private Date created;
+    private Date updated;
+    private Long price;
+    private Long sales;
+    private Boolean newt;
+    private Boolean forSale;
+    private Boolean publicDomain;
+    private Boolean limited;
+    private Boolean limitedUnique;
+    private Long remaining;
+    private Long minimumMembershipLevel;
+    private String absoluteURL;
+
 
     public Number getAssetId() {
         return this.assetId;
     }
 
-    public long getProductId() {
+    public void setAssetId(Number assetId) {
+        this.assetId = assetId;
+    }
+
+    public Long getProductId() {
         return this.productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getName() {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public AssetTypes getAssetType() {
         return this.assetType;
     }
 
-    public long getCreatorId() {
+    public void setAssetType(AssetTypes assetType) {
+        this.assetType = assetType;
+    }
+
+    public Long getCreatorId() {
         return this.creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 
     public String getCreatorName() {
         return this.creatorName;
     }
 
-    public long getIconImageAssetId() {
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public Long getIconImageAssetId() {
         return this.iconImageAssetId;
     }
 
-    public LocalDateTime getCreated() {
+    public void setIconImageAssetId(Long iconImageAssetId) {
+        this.iconImageAssetId = iconImageAssetId;
+    }
+
+    public Date getCreated() {
         return this.created;
     }
 
-    public LocalDateTime getUpdated() {
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
         return this.updated;
     }
 
-    public long getPrice() {
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public Long getPrice() {
         return this.price;
     }
 
-    public long getSales() {
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public Long getSales() {
         return this.sales;
     }
 
-    public boolean getNewt() {
+    public void setSales(Long sales) {
+        this.sales = sales;
+    }
+
+    public Boolean isNewt() {
         return this.newt;
     }
 
-    public boolean isNewt() {
+    public Boolean getNewt() {
         return this.newt;
     }
 
-    public boolean getForSale() {
+    public void setNewt(Boolean newt) {
+        this.newt = newt;
+    }
+
+    public Boolean isForSale() {
         return this.forSale;
     }
 
-    public boolean isForSale() {
+    public Boolean getForSale() {
         return this.forSale;
     }
 
-    public boolean getPublicDomain() {
+    public void setForSale(Boolean forSale) {
+        this.forSale = forSale;
+    }
+
+    public Boolean isPublicDomain() {
         return this.publicDomain;
     }
 
-    public boolean isPublicDomain() {
+    public Boolean getPublicDomain() {
         return this.publicDomain;
     }
 
-    public boolean getLimited() {
+    public void setPublicDomain(Boolean publicDomain) {
+        this.publicDomain = publicDomain;
+    }
+
+    public Boolean isLimited() {
         return this.limited;
     }
 
-    public boolean isLimited() {
+    public Boolean getLimited() {
         return this.limited;
     }
 
-    public boolean getLimitedUnique() {
+    public void setLimited(Boolean limited) {
+        this.limited = limited;
+    }
+
+    public Boolean isLimitedUnique() {
         return this.limitedUnique;
     }
 
-    public boolean isLimitedUnique() {
+    public Boolean getLimitedUnique() {
         return this.limitedUnique;
     }
 
-    public long getRemaining() {
+    public void setLimitedUnique(Boolean limitedUnique) {
+        this.limitedUnique = limitedUnique;
+    }
+
+    public Long getRemaining() {
         return this.remaining;
     }
 
-    public long getMinimumMembershipLevel() {
+    public void setRemaining(Long remaining) {
+        this.remaining = remaining;
+    }
+
+    public Long getMinimumMembershipLevel() {
         return this.minimumMembershipLevel;
     }
+
+    public void setMinimumMembershipLevel(Long minimumMembershipLevel) {
+        this.minimumMembershipLevel = minimumMembershipLevel;
+    }
+
+    public String getAbsoluteURL() {
+        return this.absoluteURL;
+    }
+
+    public void setAbsoluteURL(String absoluteURL) {
+        this.absoluteURL = absoluteURL;
+    }
+    
 
 }

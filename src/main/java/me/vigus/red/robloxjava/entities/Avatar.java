@@ -26,7 +26,7 @@ public class Avatar {
     private Integer rightLegColorId;
     private Integer leftLegColorId;
 
-    private ArrayList<AssetInformationJson> assets = new ArrayList<>();
+    private ArrayList<Asset> assets = new ArrayList<>();
 
 
     public Long getUserId() {
@@ -165,11 +165,11 @@ public class Avatar {
         this.leftLegColorId = leftLegColorId;
     }
 
-    public ArrayList<AssetInformationJson> getAssets() {
+    public ArrayList<Asset> getAssets() {
         return this.assets;
     }
 
-    public void setAssets(ArrayList<AssetInformationJson> assets) {
+    public void setAssets(ArrayList<Asset> assets) {
         this.assets = assets;
     }
 

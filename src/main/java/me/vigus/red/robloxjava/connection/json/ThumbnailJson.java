@@ -68,29 +68,25 @@ public class ThumbnailJson {
             }
         }
         x.append("]");
-        try {
-            return HTTPConnection.getInstance().postRequest("https://thumbnails.roblox.com/v1/batch", x.toString())
-                .thenApply(response -> {
-                    ArrayList<ThumbnailJson> it = new ArrayList<>();
-                    try {
-                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
-                        Iterator<JsonNode> f = jsonNode.get("data").elements();
-                        while (f.hasNext()) {
-                            ThumbnailJson o = CustomObjectMapper.getMapper().treeToValue(f.next(), ThumbnailJson.class);
-                            if (o.getErrorMessage() != ""){
-                                throw new CompletionException(o.getErrorMessage(), null);
-                            }
-                            it.add(o);
+        return HTTPConnection.getInstance().postRequest("https://thumbnails.roblox.com/v1/batch", x.toString())
+            .thenApply(response -> {
+                ArrayList<ThumbnailJson> it = new ArrayList<>();
+                try {
+                    JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
+                    Iterator<JsonNode> f = jsonNode.get("data").elements();
+                    while (f.hasNext()) {
+                        ThumbnailJson o = CustomObjectMapper.getMapper().treeToValue(f.next(), ThumbnailJson.class);
+                        if (o.getErrorMessage() != ""){
+                            throw new CompletionException(o.getErrorMessage(), null);
                         }
-                        return it;
-                    } catch (JsonProcessingException e) {
-                        throw new CompletionException(e);
+                        it.add(o);
                     }
-                });
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            throw new CompletionException(e);
-        }
+                    return it;
+                } catch (JsonProcessingException e) {
+                    throw new CompletionException(e);
+                }
+            });
+
 
     }
 

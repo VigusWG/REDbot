@@ -1,9 +1,11 @@
 package me.vigus.red.discordbot.command.commands;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
+import me.vigus.red.discordbot.command.interfaces.Buttons;
 import me.vigus.red.discordbot.command.interfaces.SlashCommand;
 import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import me.vigus.red.robloxjava.builders.UserBuilder;
@@ -12,11 +14,15 @@ import me.vigus.red.robloxjava.entities.Asset;
 import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
-public class Check extends Command implements SlashCommand{
+public class Check extends Command implements SlashCommand, Buttons{
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("EEEE 'the' dd 'of' MMMM yyyy'\n'");
 
@@ -28,12 +34,15 @@ public class Check extends Command implements SlashCommand{
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        
-        Long userId = robloxUserArgument.fromOption(event.getOption("user").getAsString());
+        interactionHookExecute(event.getHook(), event.getOption("user").getAsString());
+    }
+
+    private void interactionHookExecute(InteractionHook hook, String userOption){
+        Long userId = robloxUserArgument.fromOption(userOption);
         if (userId == null){
             CustomEmbedBuilder b = new CustomEmbedBuilder();
             b.setTitle("Error. Invalid User.");
-            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
 
@@ -65,7 +74,7 @@ public class Check extends Command implements SlashCommand{
                     .append("\nFriends: ")
                     .append(vigus.getFriendCount())
                     .append("\nNumber of badges: ")
-                    .append(vigus.getBadges().size())
+                    .append(vigus.getBadges().size() == 1400 ? "1400+" : vigus.getBadges().size())
                     .append("\nNumber of favourite games: ")
                     .append(vigus.getFavoriteGames().size())
                     .append("\n\nDescription: ")
@@ -101,27 +110,39 @@ public class Check extends Command implements SlashCommand{
             b.addField("Outfits", outfits.toString(), false);
 
             StringBuilder avatar = new StringBuilder();
-            for (AssetInformationJson ass : vigus.getAvatar().getAssets()){
-                String price = ass.getPriceInRobux() == null ? "" :  " currently costs " + ass.getPriceInRobux().toString() + " robux";
+            for (Asset ass : vigus.getAvatar().getAssets()){
+                String price = ass.getPrice() == null ? "" :  " currently costs " + ass.getPrice().toString() + " robux";
                 avatar.append(String.format("%n[%s](https://www.roblox.com/catalog/%d)%s", ass.getName(), ass.getAssetId(), price));
+            }
+            if (avatar.isEmpty()){
+                avatar.append("Nothing.");
             }
             b.addField("Currently Wearing", avatar.toString(), false);
 
             // long endTime = System.nanoTime();
             // b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
-            
-
-            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
         } catch (Exception e) {
             e.printStackTrace();
+            CustomEmbedBuilder b = new CustomEmbedBuilder();
+            b.setTitle("Sorry Error.");
+            b.setDescription(e.getCause().getMessage());
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
         }
-        
     }
 
     @Override
-    public CommandData make() {
-        return new CommandDataImpl(name, description)
-                .addOptions(robloxUserArgument.getOption());
+    public ArrayList<CommandData> make() {
+        ArrayList<CommandData> F = new ArrayList<>();
+        F.add(new CommandDataImpl(name, description)
+                .addOptions(robloxUserArgument.getOption()));
+        return F;
+    }
+
+    @Override
+    public void onButtonPressed(ButtonInteractionEvent event) {
+        event.deferReply().queue();
+        interactionHookExecute(event.getHook(), event.getComponentId().split("_", 2)[1]);
     }
  
 }

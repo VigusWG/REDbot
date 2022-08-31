@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.StreamSupport;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -61,18 +63,12 @@ public class AvatarJson {
                     av.setBodyType(scales.get("bodyType").floatValue());
 
                     Iterator<JsonNode> f = node.get("assets").elements();
-                    ArrayList<CompletableFuture<AssetInformationJson>> posFut = new ArrayList();
-                    while (f.hasNext()) {
-                        JsonNode next = f.next();
-                        posFut.add(
-                            AssetInformationJson.request(next.get("id").longValue())
-                                .whenComplete((req, exc) -> av.getAssets().add(req))
-                        );
-                    }
-
-                    CompletableFuture.allOf(posFut.toArray(new CompletableFuture[0])).join();                    
-
-                } catch (JsonProcessingException | InterruptedException e) {
+                    ArrayList<Long> list = new ArrayList<>();
+                    f.forEachRemaining(x -> list.add(x.get("id").longValue()));                 
+                    CompletableFuture<ArrayList<Asset>> posFut = AssetInfoBatch.request(list);
+                    posFut.get().forEach(a -> av.getAssets().add(a));
+                    
+                } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
                     throw new CompletionException(e);
                 }
                 return av;

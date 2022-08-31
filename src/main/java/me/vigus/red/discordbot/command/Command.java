@@ -14,7 +14,7 @@ public abstract class Command{
     protected String description;
     protected String helpExplanation;
 
-    public abstract CommandData make();
+    public abstract ArrayList<CommandData> make();
 
     public static void registerCommand(Command command){
         registeredCommands.put(command.name, command);
@@ -27,7 +27,7 @@ public abstract class Command{
     public static Collection<CommandData> getAllCommands() {
         Collection<CommandData> collection = new ArrayList<>();
         for (Command x: registeredCommands.values()){
-            collection.add(x.make());
+            collection.addAll(x.make());
         }
         return collection;
     }

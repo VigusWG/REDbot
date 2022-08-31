@@ -22,7 +22,7 @@ import me.vigus.red.robloxjava.connection.structs.CustomObjectMapper;
 import me.vigus.red.robloxjava.exceptions.RequestError;
 
 public class UserGroupsJson {
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private String ownerBuildersClubMembershipType;
@@ -53,7 +53,7 @@ public class UserGroupsJson {
     @SuppressWarnings("unchecked")
     @JsonProperty("group")
     private void unpackNestedGroup(Map<String,Object> group) {
-        this.id = (Integer)group.get("id");
+        this.id = ((Number)group.get("id")).longValue();
         this.name= (String)group.get("name");
         this.description= (String)group.get("description");
         
@@ -86,7 +86,7 @@ public class UserGroupsJson {
             Map<String,Object> shout2 = (Map<String,Object>)group.get("shout");
             this.shoutUsername = (String)shout2.get("username");
             this.shoutDisplayName = (String)shout2.get("displayName");
-            this.shoutUserId = (Long)shout2.get("userId");
+            this.shoutUserId = ((Number)shout2.get("userId")).longValue();
         }
     }
 
@@ -187,11 +187,11 @@ public class UserGroupsJson {
         this.errors = errors;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

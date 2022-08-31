@@ -120,7 +120,7 @@ public class UserBadges {
     }
 
     @JsonIgnore
-    public static CompletableFuture<ArrayList<Badge>> request(long userId, String cursor) throws InterruptedException{
+    public static CompletableFuture<ArrayList<Badge>> request(long userId, String cursor, int n) throws InterruptedException{
         String url = (cursor == null) ?  String.format("https://badges.roblox.com/v1/users/%s/badges?limit=100", userId) : String.format("https://badges.roblox.com/v1/users/%s/badges?limit=100&cursor=%s", userId, cursor); 
         return HTTPConnection.getInstance()
             .makeRequest(url)
@@ -137,8 +137,8 @@ public class UserBadges {
                     String nextCursor = jsonNode.get("nextPageCursor").asText();
                     finalList.addAll(handleData(jsonNode.get("data").elements()));
 
-                    if (!nextCursor.equals("null")){
-                        finalList.addAll(request(userId, nextCursor).get());
+                    if ((!nextCursor.equals("null")) && n < 13){
+                        finalList.addAll(request(userId, nextCursor, n+1).get());
                     }
                     
                     return finalList;
@@ -147,6 +147,11 @@ public class UserBadges {
                     throw new CompletionException(e);
                 }
             });
+    }
+
+    @JsonIgnore
+    public static CompletableFuture<ArrayList<Badge>> request(long userId, String cursor) throws InterruptedException {
+        return request(userId, cursor, 0);
     }
 
     

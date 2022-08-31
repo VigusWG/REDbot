@@ -47,6 +47,7 @@ public class FavoriteItems {
         cool.setName((String)item.get("Name"));
         cool.setDescription((String)item.get("Description"));
         cool.setAssetType(AssetTypes.typeOfValue((Integer)item.get("AssetType")));
+        cool.setAbsoluteURL(item.get("AbsoluteUrl").toString());
         this.item = cool;
     }
 

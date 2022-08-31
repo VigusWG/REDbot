@@ -2,13 +2,15 @@ package me.vigus.red.discordbot;
 
 import javax.security.auth.login.LoginException;
 
-import me.vigus.red.discordbot.command.slashcommands.Help;
-import me.vigus.red.discordbot.command.usercommands.RightyClicky;
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CommandDispatch;
+import me.vigus.red.discordbot.command.commands.AboutMe;
 import me.vigus.red.discordbot.command.commands.BadgeGameLink;
 import me.vigus.red.discordbot.command.commands.Check;
+import me.vigus.red.discordbot.command.commands.FavouriteItems;
 import me.vigus.red.discordbot.command.commands.FriendGroupLink;
+import me.vigus.red.discordbot.command.commands.Get;
+import me.vigus.red.discordbot.command.commands.InventoryItems;
 import me.vigus.red.discordbot.command.commands.View;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,13 +22,14 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class discordBot {
     static JDA bot;
+    static String token = "NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY";
 
     public static void makeBot() throws InterruptedException, LoginException{
         if (bot == null){
-            bot = JDABuilder.createLight("NzAyMTQ4MDQxNzEyNTk5MDky.Xp70Ug.3tUevKp9qq-jKfSl2dAKUqbOdUY", GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
+            bot = JDABuilder.createLight(token)
                 .setEventManager(new AnnotatedEventManager())
                 .addEventListeners(new CommandDispatch())
-                //.setActivity(Activity.competing("big competitions"))
+                .setActivity(Activity.competing("life"))
                 .build();
 
         bot.awaitReady(); //note: blocking
@@ -48,25 +51,21 @@ public class discordBot {
 
 
     public static void registerCommand(){
-        Command.registerCommand(new Help());
-        Command.registerCommand(new RightyClicky());
         Command.registerCommand(new Check());
         Command.registerCommand(new FriendGroupLink());
         Command.registerCommand(new View());
         Command.registerCommand(new BadgeGameLink());
+        Command.registerCommand(new FavouriteItems());
+        Command.registerCommand(new InventoryItems());
+        Command.registerCommand(new Get());
+        Command.registerCommand(new AboutMe());
     }
 
     public static void main() throws LoginException, InterruptedException
     {
         registerCommand();
         makeBot();
-        updateCommands(true);
-    }
-
-
-    @SubscribeEvent
-    public void onReady(ReadyEvent event){
-        System.out.println("Successfully stareted something idk what.");
+        updateCommands(false);
     }
 }
 

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
+import me.vigus.red.discordbot.command.interfaces.Buttons;
 import me.vigus.red.discordbot.command.interfaces.SlashCommand;
 import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import me.vigus.red.robloxjava.builders.UserBuilder;
@@ -24,10 +25,12 @@ import me.vigus.red.robloxjava.entities.Group;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
-public class FriendGroupLink extends Command implements SlashCommand{
+public class FriendGroupLink extends Command implements SlashCommand, Buttons{
     
     public FriendGroupLink(){
         name = "friendgrouplink";
@@ -67,15 +70,12 @@ public class FriendGroupLink extends Command implements SlashCommand{
         }
     }
 
-    @Override
-    public void execute(SlashCommandInteractionEvent event) {
-        event.deferReply().queue();
-
-        Long userId = robloxUserArgument.fromOption(event.getOption("user").getAsString());
+    private void realExcec(InteractionHook hook, String userString) {
+        Long userId = robloxUserArgument.fromOption(userString);
         if (userId == null) {
             CustomEmbedBuilder b = new CustomEmbedBuilder();
             b.setTitle("Error. Invalid User.");
-            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
 
@@ -87,8 +87,9 @@ public class FriendGroupLink extends Command implements SlashCommand{
                 .build();
         } catch (Exception e){
             CustomEmbedBuilder b = new CustomEmbedBuilder();
-            b.setTitle("Error. Invalid User.");
-            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
+            b.setTitle("Error.");
+            b.setDescription(e.getMessage());
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
             return;
         }
 
@@ -113,7 +114,6 @@ public class FriendGroupLink extends Command implements SlashCommand{
                     })
                     .whenComplete((req, exc) -> {
                         if (req == null){
-                            System.out.println("req was null");
                             return;
                         }
                         if (exc != null) {
@@ -156,19 +156,33 @@ public class FriendGroupLink extends Command implements SlashCommand{
             }
             
             b.setDescription(stringBuild.toString());
-            event.getHook().editOriginalEmbeds(b.formattedBuild()).queue();
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
 
         } catch (Exception e){
-            System.out.println(e.getLocalizedMessage());
-            ;
+            CustomEmbedBuilder b = new CustomEmbedBuilder();
+            b.setTitle("Error.");
+            b.setDescription(e.getCause().getMessage());
+            hook.editOriginalEmbeds(b.formattedBuild()).queue();
         }
-        
     }
 
     @Override
-    public CommandData make() {
-        return new CommandDataImpl(name, description)
-                .addOptions(robloxUserArgument.getOption());
+    public ArrayList<CommandData> make() {
+        ArrayList<CommandData> F = new ArrayList<>();
+        F.add(new CommandDataImpl(name, description)
+                .addOptions(robloxUserArgument.getOption()));
+        return F;
     }
-    
+
+    @Override
+    public void onButtonPressed(ButtonInteractionEvent event) {
+        event.deferReply().queue();
+        realExcec(event.getHook(), event.getComponentId().split("_", 2)[1]);
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
+        event.deferReply().queue();
+        realExcec(event.getHook(), event.getOption("user").getAsString());
+    }
 }

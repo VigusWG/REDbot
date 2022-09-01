@@ -17,7 +17,7 @@ public abstract class robloxUserArgument{
     }
 
     public static OptionData getDiscordUserOption(boolean isRequired) {
-        return new OptionData(OptionType.USER, "discorsuser",
+        return new OptionData(OptionType.USER, "discorduser",
                 "A discord user mention", isRequired, false);
     }
 

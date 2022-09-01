@@ -85,9 +85,9 @@ public class Get extends Command implements UserCommand, SlashCommand{
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-            
-        Long userId = robloxUserArgument.fromOption(event.getOption("discorduser").getAsMentionable().getAsMention());
-        event.replyEmbeds(doSomething(userId, event.getGuild().getMemberById(userId)).formattedBuild())
+        Member mem = event.getOption("discorduser").getAsMember();
+        Long userId = robloxUserArgument.fromOption("<@"+mem.getId()+">");
+        event.replyEmbeds(doSomething(userId, mem).formattedBuild())
                 .addActionRow(
                         Button.primary(String.format("check_%d", userId), "Check User").withDisabled(userId == null),
                         Button.primary(String.format("favourites_%d", userId), "See User Favourite Assets")
@@ -97,7 +97,6 @@ public class Get extends Command implements UserCommand, SlashCommand{
                         Button.primary(String.format("badgegamelink_%d", userId),
                                 "Get the games the user has the most badges from").withDisabled(userId == null))
                 .queue();
-        
     }
     
 }

@@ -31,8 +31,8 @@ public class Get extends Command implements UserCommand, SlashCommand{
             .addActionRow(
                 Button.primary(String.format("check_%d", userId), "Check User").withDisabled(userId==null),
                 Button.primary(String.format("favourites_%d", userId), "See User Favourite Assets").withDisabled(userId==null),
-                Button.primary(String.format("friendgrouplink_%d", userId), "Correlate the Users Friends and Groups").withDisabled(userId==null),
-                Button.primary(String.format("badgegamelink_%d", userId), "Get the games the user has the most badges from").withDisabled(userId==null)
+                Button.primary(String.format("friendgrouplink_%d", userId), "Correlate the Users Friends and Groups").withDisabled(userId==null)
+                //Button.primary(String.format("badgegamelink_%d", userId), "Get the games the user has the most badges from").withDisabled(userId==null)
             )
             .queue();
     }
@@ -93,9 +93,8 @@ public class Get extends Command implements UserCommand, SlashCommand{
                         Button.primary(String.format("favourites_%d", userId), "See User Favourite Assets")
                                 .withDisabled(userId == null),
                         Button.primary(String.format("friendgrouplink_%d", userId),
-                                "Correlate the Users Friends and Groups").withDisabled(userId == null),
-                        Button.primary(String.format("badgegamelink_%d", userId),
-                                "Get the games the user has the most badges from").withDisabled(userId == null))
+                                "Correlate the Users Friends and Groups").withDisabled(userId == null))
+                        //Button.primary(String.format("badgegamelink_%d", userId),"Get the games the user has the most badges from").withDisabled(userId == null))
                 .queue();
     }
     

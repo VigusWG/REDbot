@@ -2,6 +2,7 @@ package me.vigus.red.discordbot.command.commands;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import me.vigus.red.discordbot.command.Command;
 import me.vigus.red.discordbot.command.CustomEmbedBuilder;
@@ -14,6 +15,7 @@ import me.vigus.red.robloxjava.entities.Asset;
 import me.vigus.red.robloxjava.entities.Outfit;
 import me.vigus.red.robloxjava.entities.User;
 import me.vigus.red.robloxjava.entities.UserInGroup;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -121,7 +123,9 @@ public class Check extends Command implements SlashCommand, Buttons{
 
             // long endTime = System.nanoTime();
             // b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
-            hook.editOriginalEmbeds(b.formattedBuild()).queue();
+            Collection<MessageEmbed> replys = b.formattedBuild();
+            hook.editOriginalEmbeds(replys.stream().findFirst().get()).queue();
+            replys.stream().skip(1).forEach(x -> hook.sendMessageEmbeds(x).queue());
         } catch (Exception e) {
             e.printStackTrace();
             CustomEmbedBuilder b = new CustomEmbedBuilder();

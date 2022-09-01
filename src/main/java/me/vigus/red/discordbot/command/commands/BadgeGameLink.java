@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class BadgeGameLink extends Command implements SlashCommand, Buttons {
         }
 
         public CompletableFuture<AssetInformationJson> getGame() throws InterruptedException{
-            return AssetInformationJson.request(this.id).whenComplete((req, exc) -> this.game = req);
+            return AssetInformationJson.request(this.id).whenComplete((req, exc) -> { if (exc != null){throw new CompletionException(exc);}this.game = req;});
         }
 
         @Override
@@ -74,7 +75,6 @@ public class BadgeGameLink extends Command implements SlashCommand, Buttons {
             CustomEmbedBuilder b = new CustomEmbedBuilder();
             b.setTitle(String.format("List of Badges from Games for %s", user.getName()));
             b.setThumbnail(user.getThumbnail());
-            
             HashMap<Long, GameAmmount> games = new HashMap<>();
             if (user.getBadges().size() >= 1400) {
                 b.setTitle("Error!");
@@ -89,8 +89,8 @@ public class BadgeGameLink extends Command implements SlashCommand, Buttons {
                     .collect(Collectors.toList());
 
             CompletableFuture.allOf(topTen.stream().map(t -> {
-                try {
-                    return t.getGame();
+            try {
+                return t.getGame();
                 } catch (InterruptedException e) {
                     AssetInformationJson a =  new AssetInformationJson();
                     a.setName("Error");
@@ -99,6 +99,7 @@ public class BadgeGameLink extends Command implements SlashCommand, Buttons {
             }).collect(Collectors.toList()).toArray(
                     new CompletableFuture[0])).join();
 
+            System.out.println("Formatting String");
             StringBuilder desc = new StringBuilder();
             for (GameAmmount g :topTen){
                 desc.append(String.format("%n%d badges from [%s](https://www.roblox.com/games/%d)", g.getAmmount(), g.game.getName(), g.game.getAssetId()));

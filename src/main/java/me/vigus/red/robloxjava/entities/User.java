@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import me.vigus.red.discordbot.discordBot;
 import me.vigus.red.discordbot.discordarguments.robloxuserargument.robloxUserArgument;
 import me.vigus.red.robloxjava.builders.UserBuilder;
 import me.vigus.red.robloxjava.connection.http.HTTPConnection;
@@ -279,7 +280,7 @@ public class User {
                         .GET()
                         .uri(URI.create(String.format("https://v3.blox.link/developer/discord/%s",
                                         disordId)))
-                        .header("api-key", "14853ac4-0917-42ae-a25f-fdf93e93ebc3")
+                        .header("api-key", discordBot.getBloxToken())
                         .build();
                     return HTTPConnection.getClient().sendAsync(killMe, HttpResponse.BodyHandlers
                                 .ofString())

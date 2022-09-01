@@ -13,9 +13,13 @@ public class App
     {
         try {
             String token = args[0];
+            if (args.length == 2){
+                String bloxLinkToken = args[1];
+                discordBot.setBloxToken(bloxLinkToken);
+            }
             discordBot.setToken(token);
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("No arguments provided. Please give the token as an argument.");
+            System.out.println("No arguments provided. Please give the token as an argument and optionally a bloxlink api token");
             return;
         }
         System.out.println("Started.");

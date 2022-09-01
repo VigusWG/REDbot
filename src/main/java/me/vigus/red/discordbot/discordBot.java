@@ -15,14 +15,12 @@ import me.vigus.red.discordbot.command.commands.View;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
-import net.dv8tion.jda.api.hooks.SubscribeEvent;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class discordBot {
     static JDA bot;
     static String token;
+    static String bloxToken = "";
 
     public static void setToken(String Token){
         token = Token;
@@ -70,6 +68,14 @@ public class discordBot {
         registerCommand();
         makeBot();
         updateCommands(false);
+    }
+
+    public static String getBloxToken() {
+        return bloxToken;
+    }
+
+    public static void setBloxToken(String bloxLinkToken) {
+        bloxToken = bloxLinkToken;
     }
 }
 

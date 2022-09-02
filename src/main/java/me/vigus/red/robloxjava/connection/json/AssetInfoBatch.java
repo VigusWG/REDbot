@@ -32,23 +32,30 @@ public class AssetInfoBatch {
                     ArrayList<Asset> finalList = new ArrayList<>();
                     try {
                         JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
-                        Iterator<JsonNode> d = jsonNode.get("data").elements();
-                        while (d.hasNext()){
-                            JsonNode item = d.next();
-                            Asset cool = new Asset();
-                            cool.setAssetId(item.get("id").longValue());
-                            cool.setAssetType(AssetTypes.typeOfValue(item.get("assetType").intValue()));
-                            cool.setName(item.get("name").asText());
-                            cool.setDescription(item.get("description").asText());
-                            cool.setProductId(item.get("productId").asLong());
-                            cool.setCreatorId(item.get("creatorTargetId").longValue());
-                            cool.setCreatorName(item.get("creatorName").asText());
-                            if (item.has("price")){
-                                cool.setPrice(item.get("price").asLong());
+                        if (jsonNode.has("data")){
+                            Iterator<JsonNode> d = jsonNode.get("data").elements();
+                            while (d.hasNext()){
+                                try {
+                                    JsonNode item = d.next();
+                                    Asset cool = new Asset();
+                                    cool.setAssetId(item.get("id").longValue());
+                                    cool.setAssetType(AssetTypes.typeOfValue(item.get("assetType").intValue()));
+                                    cool.setName(item.get("name").asText());
+                                    if (item.has("description")){
+                                        cool.setDescription(item.get("description").asText());
+                                    }
+                                    cool.setProductId(item.get("productId").asLong());
+                                    cool.setCreatorId(item.get("creatorTargetId").longValue());
+                                    cool.setCreatorName(item.get("creatorName").asText());
+                                    if (item.has("price")){
+                                        cool.setPrice(item.get("price").asLong());
+                                    }
+                                    finalList.add(cool);
+                                } catch (Exception e){
+                                    System.out.println("there was an errror in assetinfobatch: "+e.getLocalizedMessage());
+                                }
                             }
-                            finalList.add(cool);
                         }
-                        
                         return finalList;
 
                     } catch (Exception e) {

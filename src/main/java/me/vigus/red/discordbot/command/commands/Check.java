@@ -117,7 +117,7 @@ public class Check extends Command implements SlashCommand, Buttons{
                 avatar.append(String.format("%n[%s](https://www.roblox.com/catalog/%d)%s", ass.getName(), ass.getAssetId(), price));
             }
             if (avatar.isEmpty()){
-                avatar.append("Nothing.");
+                avatar.append("Nothing. (There's a high chance in reality it errored)");
             }
             b.addField("Currently Wearing", avatar.toString(), false);
 

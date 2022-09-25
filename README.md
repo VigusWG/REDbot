@@ -1,5 +1,5 @@
 ## RED
-## As used in ~~2000 servers
+### As used in ~2000 servers
 ![](https://img.shields.io/discord/950081089278451773)
 A discord bot written in java with [JDA](https://github.com/DV8FromTheWorld/JDA) and a custom written wrapper to the roblox api.
 ![Badge Game Link](/Screenshots/badgeGameLink.png)

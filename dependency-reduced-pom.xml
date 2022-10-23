@@ -60,6 +60,9 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-install-plugin</artifactId>

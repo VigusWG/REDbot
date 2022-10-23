@@ -43,7 +43,6 @@
         <version>4.13.1</version>
         <scope>test</scope>
       </dependency>
-
   </dependencies>
 
   <build>
@@ -104,6 +103,9 @@
               </goals>
             </execution>
           </executions>
+          <configuration>
+            <skipTests>true</skipTests>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>

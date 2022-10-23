@@ -29,10 +29,10 @@ public final class HTTPConnection {
         if(instance == null) {
             instance = new HTTPConnection();
             client = HttpClient.newBuilder()
-                .executor(Executors.newFixedThreadPool(20))
+                .executor(Executors.newFixedThreadPool(40))
                 .version(Version.HTTP_2)
                 .followRedirects(Redirect.NEVER)
-                .connectTimeout(Duration.ofSeconds(2))
+                .connectTimeout(Duration.ofSeconds(3))
                 .build();
             semaphore = new Semaphore(50);
         }
@@ -46,7 +46,7 @@ public final class HTTPConnection {
         return client;
     }
 
-    public CompletableFuture<HttpResponse<String>> makeRequest(String url) throws InterruptedException{
+    public CompletableFuture<HttpResponse<String>> makeRequest(String url, Boolean tryAgainIf403) throws InterruptedException{
         semaphore.acquire();
         CompletableFuture<HttpResponse<String>> a = client.sendAsync(toHttpRequest(url), HttpResponse.BodyHandlers.ofString())
             .thenComposeAsync(resp -> {
@@ -54,17 +54,26 @@ public final class HTTPConnection {
                 if (xc.isPresent()){
                     setcsrf(resp.headers().firstValue("x-csrf-token").get());
                 }
-                if (resp.statusCode() == 403){
+                if (resp.statusCode() == 403 && tryAgainIf403.equals(true)){
                     try {
-                        return makeRequest(url);
+                        return makeRequest(url, false);
                     } catch (InterruptedException e) {
                         throw new CompletionException(e);
                     }
                 }
                 return CompletableFuture.supplyAsync(() -> resp);
             });
-        a.thenRun(() -> semaphore.release());
+        a.whenComplete((in, ex) -> {
+            if (ex != null){
+                System.err.println(ex.getMessage());
+            }
+            semaphore.release();
+        });
         return a;
+    }
+
+    public CompletableFuture<HttpResponse<String>> makeRequest(String url) throws InterruptedException{
+        return makeRequest(url, true);
     }
 
     private HttpRequest toHttpRequest(String url){
@@ -103,7 +112,12 @@ public final class HTTPConnection {
                 }
                 return CompletableFuture.supplyAsync(() -> resp);
             });
-        a.thenRun(() -> semaphore.release());
+        a.whenComplete((in, ex) -> {
+            if (ex != null) {
+                System.err.println(ex.getMessage());
+            }
+            semaphore.release();
+        });
         return a;
     }
 

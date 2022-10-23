@@ -271,32 +271,37 @@ public class User {
                             return jsonNode.get("robloxId").longValue();
                         }
                     } catch (JsonProcessingException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                     //Fucking shit code but idc im bored af
                     try {
+                        if (discordBot.getBloxToken() == null){
+                            return null;
+                        }
+                        
+                        HttpRequest killMe = HttpRequest.newBuilder()
+                            .GET()
+                            .uri(URI.create(String.format("https://v3.blox.link/developer/discord/%s",
+                                            disordId)))
+                            .header("api-key", discordBot.getBloxToken())
+                            .build();
 
-                    HttpRequest killMe = HttpRequest.newBuilder()
-                        .GET()
-                        .uri(URI.create(String.format("https://v3.blox.link/developer/discord/%s",
-                                        disordId)))
-                        .header("api-key", discordBot.getBloxToken())
-                        .build();
-                    return HTTPConnection.getClient().sendAsync(killMe, HttpResponse.BodyHandlers
-                                .ofString())
-                            .thenApply(response -> {
-                                if (response.statusCode() == 200){
-                                    try {
-                                        JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
-                                        if (jsonNode.get("success").textValue().equals(true)) {
-                                            return jsonNode.get("user").get("robloxId").longValue();
+                        return HTTPConnection.getClient().sendAsync(killMe, HttpResponse.BodyHandlers
+                                    .ofString())
+                                .thenApply(response -> {
+                                    if (response.statusCode() == 200){
+                                        try {
+                                            JsonNode jsonNode = CustomObjectMapper.getMapper().readTree(response.body());
+                                            if (jsonNode.get("success").booleanValue()) {
+                                                return Long.valueOf(jsonNode.get("user").get("robloxId").asText());
+                                            }
+                                        } catch (JsonProcessingException e) {
+                                            e.printStackTrace();
+                                            return null;
                                         }
-                                    } catch (JsonProcessingException e) {
-                                        e.printStackTrace();
                                     }
-                                }
-                                return null;
-                    }).get();
+                                    return null;
+                        }).get();
                     
                     } catch (Exception e) {
                         e.printStackTrace();

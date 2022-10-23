@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import javax.sound.midi.Track;
-
 import org.junit.Test;
 
 public class HttpConnectionTest {
-    @Test
+    @Test(timeout = 3000)
     public void getRequestWorks() throws InterruptedException, ExecutionException {
         HTTPConnection.getInstance();
 
@@ -25,7 +23,7 @@ public class HttpConnectionTest {
         assertEquals(a.statusCode(), 200);
     }
 
-    @Test
+    @Test(timeout = 3000)
     public void multiRequestsWorks() throws InterruptedException, ExecutionException {
         ArrayList<CompletableFuture<Integer>> completables = new ArrayList<>();
         HTTPConnection instance = HTTPConnection.getInstance();

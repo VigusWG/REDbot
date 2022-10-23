@@ -31,11 +31,13 @@ public class discordBot {
             bot = JDABuilder.createLight(token)
                 .setEventManager(new AnnotatedEventManager())
                 .addEventListeners(new CommandDispatch())
-                .setActivity(Activity.competing("life"))
+                .setActivity(Activity.competing("against the cloud"))
                 .build();
 
-        bot.awaitReady(); //note: blocking
-        }
+            bot.awaitReady(); //note: blocking
+            System.out.println("The bot has fully loaded.");
+            System.out.println("Started.\nThe RED discord bot was created by Vigus.\nFor more information visit https://github.com/VigusWG/REDbot ");
+        }   
     }
 
     public static void updateCommands(boolean debugMode){
@@ -67,7 +69,7 @@ public class discordBot {
     {
         registerCommand();
         makeBot();
-        updateCommands(false);
+        updateCommands(true);
     }
 
     public static String getBloxToken() {

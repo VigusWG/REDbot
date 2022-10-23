@@ -63,19 +63,20 @@ public abstract class robloxUserArgument{
                 return null;
             }
         }
-
         Long l = fromURL(option);
         if (l != null){
             return l;
         }
-
         try {
             return User.idFromUsername(option).get();
+            
         } catch (InterruptedException | ExecutionException e) {
             //Should't fail tbh
             e.printStackTrace();
             return null;
         }
+        
+
     }
 
     public static OptionData getOption() {

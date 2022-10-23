@@ -45,7 +45,7 @@ public class Get extends Command implements UserCommand, SlashCommand{
     //     event.replyEmbeds(doSomething(userId, mem).formattedBuild()).queue();
     // }
 
-    private CustomEmbedBuilder doSomething(Long userId, Member member){    
+    private CustomEmbedBuilder doSomething(Long userId, Member member){
         CustomEmbedBuilder b = new CustomEmbedBuilder();
         b.setTitle(member.getEffectiveName());
         b.setThumbnail(member.getUser().getAvatarUrl());
@@ -87,6 +87,7 @@ public class Get extends Command implements UserCommand, SlashCommand{
     public void execute(SlashCommandInteractionEvent event) {
         Member mem = event.getOption("discorduser").getAsMember();
         Long userId = robloxUserArgument.fromOption("<@"+mem.getId()+">");
+        //Long userId = null;
         event.replyEmbeds(doSomething(userId, mem).formattedBuild())
                 .addActionRow(
                         Button.primary(String.format("check_%d", userId), "Check User").withDisabled(userId == null),
@@ -97,5 +98,4 @@ public class Get extends Command implements UserCommand, SlashCommand{
                         //Button.primary(String.format("badgegamelink_%d", userId),"Get the games the user has the most badges from").withDisabled(userId == null))
                 .queue();
     }
-    
 }

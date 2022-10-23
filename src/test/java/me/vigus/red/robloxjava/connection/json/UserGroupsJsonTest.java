@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import org.junit.Test;
 
 public class UserGroupsJsonTest {
-    @Test
+    @Test(timeout = 4000)
     public void testRequest() {
         try {
             ArrayList<UserGroupsJson> a = UserGroupsJson.request(72885863L).get();
@@ -20,7 +20,7 @@ public class UserGroupsJsonTest {
         }
     }
 
-    @Test
+    @Test(timeout = 4000)
     public void testMultiRequest() {
         try {
             ArrayList<CompletableFuture<ArrayList<UserGroupsJson>>> li = new ArrayList<>();

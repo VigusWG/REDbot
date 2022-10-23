@@ -17,12 +17,11 @@ import net.dv8tion.jda.api.hooks.SubscribeEvent;
 
 public class CommandDispatch {
 
-
     private static final String INVALIDCOMMAND = ":warning:This command does not exist.";
-    private static ExecutorService executorService = Executors.newFixedThreadPool(15); //15 simul commands (i think)
+    private static ExecutorService executorService = Executors.newFixedThreadPool(20); //20 simul commands (i think)
 
     private static void submitToExcecutor(Runnable runner, String command){
-        executorService.submit(runner);
+        executorService.execute(runner);
         System.out.println("New Command: " + command);
     }
 

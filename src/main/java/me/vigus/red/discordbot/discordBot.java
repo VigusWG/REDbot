@@ -69,7 +69,7 @@ public class discordBot {
     {
         registerCommand();
         makeBot();
-        updateCommands(true);
+        updateCommands(false);
     }
 
     public static String getBloxToken() {

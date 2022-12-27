@@ -31,16 +31,16 @@ public class CustomEmbedBuilder extends EmbedBuilder{
         return embeds;
     }
 
-    private List<String> splitUpString(String string, int length){
+    private List<String> splitUpString(String string, int maxLength){
         List<String> descs = new ArrayList<>();
-        if (string.length() >= length){
+        if (string.length() >= maxLength){
             String des = "";
             for (String sec : string.split("\n")){
-                if (des.length() + sec.length() >= length){
+                if (des.length() + sec.length() >= maxLength){
                     descs.add(des);
                     des = sec;
                 }else{
-                    des += " "+sec;
+                    des += "\n"+sec;
                 }
             }
         }else{
@@ -67,7 +67,7 @@ public class CustomEmbedBuilder extends EmbedBuilder{
                 List<String> val = splitUpString(field.getValue(), MessageEmbed.VALUE_MAX_LENGTH);
                 for (int i = 1; i <= val.size(); i++){
                     String tit = i == 1 ? field.getName() : field.getName() + String.format(" (Part %d)", i);
-                    fields.add(new Field(tit, val.get(0), field.isInline()));
+                    fields.add(new Field(tit, val.get(i-1), field.isInline()));
                 }
             }else{
                 fields.add(field);

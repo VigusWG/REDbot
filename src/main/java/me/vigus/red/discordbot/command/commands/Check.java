@@ -124,8 +124,9 @@ public class Check extends Command implements SlashCommand, Buttons{
             // long endTime = System.nanoTime();
             // b.addField("Time", String.format("Time 1: %s%nTime 2: %s%nTime 3: %s", (time2- startTime)/1000000, (time3- startTime)/ 1000000, (endTime-startTime)/1000000), false);            
             Collection<MessageEmbed> replys = b.formattedBuild();
-            hook.editOriginalEmbeds(replys.stream().findFirst().get()).queue();
-            replys.stream().skip(1).forEach(x -> hook.sendMessageEmbeds(x).queue());
+            //hook.editOriginalEmbeds(replys.stream().findFirst().get()).queue();
+            //replys.stream().skip(1).forEach(x -> hook.sendMessageEmbeds(x).queue());
+            replys.stream().forEach(x -> hook.sendMessageEmbeds(x).queue());
         } catch (Exception e) {
             e.printStackTrace();
             CustomEmbedBuilder b = new CustomEmbedBuilder();

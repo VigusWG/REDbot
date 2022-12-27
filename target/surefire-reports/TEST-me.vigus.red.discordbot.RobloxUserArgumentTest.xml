@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.138" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.149" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/vigus/Downloads/REDbot/target/surefire/surefirebooter12288209127669643788.jar /home/vigus/Downloads/REDbot/target/surefire 2022-12-27T02-10-45_924-jvmRun1 surefire3062964012561919377tmp surefire_015101299611567055345tmp"/>
+    <property name="sun.java.command" value="/home/vigus/Downloads/REDbot/target/surefire/surefirebooter4903783808619145108.jar /home/vigus/Downloads/REDbot/target/surefire 2022-12-27T02-20-02_817-jvmRun1 surefire941831861099264509tmp surefire_013962005069150475907tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/vigus/Downloads/REDbot/target/test-classes:/home/vigus/Downloads/REDbot/target/classes:/home/vigus/.m2/repository/net/dv8tion/JDA/5.0.0-alpha.11/JDA-5.0.0-alpha.11.jar:/home/vigus/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/vigus/.m2/repository/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar:/home/vigus/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/vigus/.m2/repository/com/neovisionaries/nv-websocket-client/2.14/nv-websocket-client-2.14.jar:/home/vigus/.m2/repository/com/squareup/okhttp3/okhttp/4.9.3/okhttp-4.9.3.jar:/home/vigus/.m2/repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar:/home/vigus/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.jar:/home/vigus/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.10/kotlin-stdlib-1.4.10.jar:/home/vigus/.m2/repository/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar:/home/vigus/.m2/repository/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3.jar:/home/vigus/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.2/jackson-core-2.13.2.jar:/home/vigus/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.4.1/jackson-databind-2.13.4.1.jar:/home/vigus/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.4/jackson-annotations-2.13.4.jar:/home/vigus/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/home/vigus/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/vigus/Downloads/REDbot/target/surefire/surefirebooter12288209127669643788.jar"/>
+    <property name="surefire.real.class.path" value="/home/vigus/Downloads/REDbot/target/surefire/surefirebooter4903783808619145108.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.5+8-Ubuntu-2ubuntu122.04"/>
     <property name="user.name" value="vigus"/>
@@ -51,10 +51,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="optionAsDiscordMention" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.011"/>
-  <testcase name="isNumericWorksForTrue" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.007"/>
-  <testcase name="optionAsURL" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0"/>
-  <testcase name="isNumericWorksForFalse" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.001"/>
-  <testcase name="optionAsUsernsme" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.005"/>
-  <testcase name="optionAsID" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0"/>
+  <testcase name="optionAsDiscordMention" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.02"/>
+  <testcase name="isNumericWorksForTrue" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0"/>
+  <testcase name="optionAsURL" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.001"/>
+  <testcase name="isNumericWorksForFalse" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.002"/>
+  <testcase name="optionAsUsernsme" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.006"/>
+  <testcase name="optionAsID" classname="me.vigus.red.discordbot.RobloxUserArgumentTest" time="0.001"/>
 </testsuite>

@@ -446,12 +446,14 @@ public class UserBuilder {
 
         if (this.getOutfits()){
             completables.add(UserOutfits.request(this.userId)
-                .exceptionally(ex -> {
-                    completableFuture.completeExceptionally(ex);
-                    throw new CompletionException(ex);
-                }).whenComplete((request, exception) -> {
-                    user.setOutfits(request.getOutfits());
-                    user.setAmmountOfOutfits(request.getTotal());
+                .whenComplete((request, exception) -> {
+                    if (exception != null){
+                        user.setOutfits(request.getOutfits());
+                        user.setAmmountOfOutfits(request.getTotal());
+                    }else{
+                        user.setOutfits(null);
+                        user.setAmmountOfOutfits(null);
+                    }
                 }));
         }
 

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: me.vigus.red.robloxjava.connection.json.UserGroupsJsonTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.748 s - in me.vigus.red.robloxjava.connection.json.UserGroupsJsonTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.893 s - in me.vigus.red.robloxjava.connection.json.UserGroupsJsonTest

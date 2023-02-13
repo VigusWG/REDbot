@@ -99,16 +99,21 @@ public class Check extends Command implements SlashCommand, Buttons{
 
 
             StringBuilder outfits = new StringBuilder();
-            for (Outfit outfit : vigus.getOutfits()){
-                outfits.append(String.format("%s%n", outfit.getName()));
-            }
-
-            if (outfits.isEmpty()){
-                outfits.append("None.");
+            if (vigus.getOutfits() != null){
+                for (Outfit outfit : vigus.getOutfits()){
+                    outfits.append(String.format("%s%n", outfit.getName()));
+                }
+    
+                if (outfits.isEmpty()){
+                    outfits.append("None.");
+                }else{
+                    outfits.setLength(outfits.length() - 1); //to remove the last new line
+                }
+                
             }else{
-                outfits.setLength(outfits.length() - 1); //to remove the last new line
+                outfits.append("Error getting them.");
             }
-
+            
             b.addField("Outfits", outfits.toString(), false);
 
             StringBuilder avatar = new StringBuilder();
@@ -119,8 +124,9 @@ public class Check extends Command implements SlashCommand, Buttons{
                 }
             }
             if (avatar.isEmpty()){
-                avatar.append("Nothing. (There's a high chance in reality it errored)");
+                avatar.append("None. (There's a high chance in reality it errored)");
             }
+
             b.addField("Currently Wearing", avatar.toString(), false);
 
             // long endTime = System.nanoTime();

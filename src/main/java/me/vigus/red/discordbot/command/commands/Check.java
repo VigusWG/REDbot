@@ -112,9 +112,11 @@ public class Check extends Command implements SlashCommand, Buttons{
             b.addField("Outfits", outfits.toString(), false);
 
             StringBuilder avatar = new StringBuilder();
-            for (Asset ass : vigus.getAvatar().getAssets()){
-                String price = ass.getPrice() == null ? "" :  " currently costs " + ass.getPrice().toString() + " robux";
-                avatar.append(String.format("%n[%s](https://www.roblox.com/catalog/%d)%s", ass.getName(), ass.getAssetId(), price));
+            if (vigus.getAvatar() != null){
+                for (Asset ass : vigus.getAvatar().getAssets()){
+                    String price = ass.getPrice() == null ? "" :  " currently costs " + ass.getPrice().toString() + " robux";
+                    avatar.append(String.format("%n[%s](https://www.roblox.com/catalog/%d)%s", ass.getName(), ass.getAssetId(), price));
+                }
             }
             if (avatar.isEmpty()){
                 avatar.append("Nothing. (There's a high chance in reality it errored)");

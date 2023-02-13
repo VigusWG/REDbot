@@ -14,6 +14,7 @@ import me.vigus.red.discordbot.command.commands.InventoryItems;
 import me.vigus.red.discordbot.command.commands.View;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
 
@@ -31,7 +32,8 @@ public class discordBot {
             bot = JDABuilder.createLight(token)
                 .setEventManager(new AnnotatedEventManager())
                 .addEventListeners(new CommandDispatch())
-                .setActivity(Activity.competing("against the cloud"))
+                .setActivity(Activity.watching("you."))
+                .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
 
             bot.awaitReady(); //note: blocking
@@ -80,4 +82,3 @@ public class discordBot {
         bloxToken = bloxLinkToken;
     }
 }
-

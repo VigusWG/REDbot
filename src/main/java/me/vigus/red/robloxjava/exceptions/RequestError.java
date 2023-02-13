@@ -8,6 +8,7 @@ public class RequestError extends Exception{
 
     public RequestError(ErrorJson errorJson){
         super(errorJson.getUserFacingMessage());
+        System.out.println(errorJson.getMessage());
         this.errorJson = errorJson;
     }
 

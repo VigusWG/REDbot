@@ -258,6 +258,9 @@ public class UserBuilder {
         //so http stuff here
 
         //no clue what these comments are meant to mean lmao
+        
+        //fr lol (later later vigus)
+        //ps what a clusterfuck this class is. truly awful design
 
         ArrayList<CompletableFuture> completables = new ArrayList<>();
         CompletableFuture<User> completableFuture = new CompletableFuture<>();
@@ -422,11 +425,12 @@ public class UserBuilder {
 
         if (this.getAvatar()){
             completables.add(AvatarJson.request(this.userId)
-                .exceptionally(ex -> {
-                    completableFuture.completeExceptionally(ex);
-                    throw new CompletionException(ex);
-                }).whenComplete((request, exception) -> {
-                    user.setAvatar(request);
+                .whenComplete((request, exception) -> {
+                    if (exception != null){
+                        user.setAvatar(null);
+                    }else{
+                        user.setAvatar(request);
+                    }
                 }));
         }
 

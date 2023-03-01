@@ -1,6 +1,6 @@
 ## RED
-### As used in over 2000 servers
-![Discord](https://img.shields.io/discord/950081089278451773)
+### RIP 2019 - 2023.
+### Was used in over 2230 servers.
 
 A discord bot written in java with [JDA](https://github.com/DV8FromTheWorld/JDA) and a custom written wrapper to the roblox api.
 ![Badge Game Link](/Screenshots/badgeGameLink.png)
